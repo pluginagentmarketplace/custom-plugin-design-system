@@ -1,0 +1,264 @@
+{
+  "version": "1.0.0",
+  "agents": [
+    {
+      "id": "frontend-specialist",
+      "name": "Frontend Specialist",
+      "emoji": "🌐",
+      "description": "Expert in web frontend technologies and frameworks",
+      "expertise_level": 5,
+      "coverage": "16 roadmaps",
+      "learning_hours": 450,
+      "projects": 15,
+      "primary_skills": [
+        "HTML/CSS",
+        "JavaScript",
+        "React",
+        "Vue.js",
+        "Angular",
+        "TypeScript"
+      ],
+      "roadmaps": [
+        "frontend",
+        "frontend-beginner",
+        "html",
+        "css",
+        "javascript",
+        "typescript",
+        "react",
+        "nextjs",
+        "react-native",
+        "vue",
+        "angular",
+        "graphql-client",
+        "api-design-client",
+        "web-performance",
+        "testing-frontend",
+        "design-system"
+      ],
+      "file": "agents/01-frontend-specialist.md"
+    },
+    {
+      "id": "backend-specialist",
+      "name": "Backend Specialist",
+      "emoji": "🖥️",
+      "description": "Expert in backend development and server-side technologies",
+      "expertise_level": 5,
+      "coverage": "18 roadmaps",
+      "learning_hours": 550,
+      "projects": 18,
+      "primary_skills": [
+        "Python",
+        "Node.js",
+        "Java",
+        "Go",
+        "REST APIs",
+        "GraphQL"
+      ],
+      "roadmaps": [
+        "backend",
+        "backend-beginner",
+        "python",
+        "nodejs",
+        "java",
+        "go",
+        "rust",
+        "php",
+        "aspnet-core",
+        "spring-boot",
+        "api-design",
+        "graphql",
+        "postgresql",
+        "mongodb",
+        "redis",
+        "system-design",
+        "microservices",
+        "message-queues"
+      ],
+      "file": "agents/02-backend-specialist.md"
+    },
+    {
+      "id": "infrastructure-devops-specialist",
+      "name": "Infrastructure & DevOps Specialist",
+      "emoji": "⚙️",
+      "description": "Expert in DevOps, cloud infrastructure, and deployment",
+      "expertise_level": 5,
+      "coverage": "13 roadmaps",
+      "learning_hours": 450,
+      "projects": 13,
+      "primary_skills": [
+        "Docker",
+        "Kubernetes",
+        "AWS",
+        "Terraform",
+        "CI/CD",
+        "Linux"
+      ],
+      "roadmaps": [
+        "devops",
+        "devops-beginner",
+        "linux",
+        "docker",
+        "kubernetes",
+        "aws",
+        "cloudflare",
+        "terraform",
+        "cicd",
+        "monitoring",
+        "infrastructure-security",
+        "networking",
+        "disaster-recovery"
+      ],
+      "file": "agents/03-infrastructure-devops-specialist.md"
+    },
+    {
+      "id": "data-ai-specialist",
+      "name": "Data & AI Specialist",
+      "emoji": "📊",
+      "description": "Expert in data science, machine learning, and AI",
+      "expertise_level": 5,
+      "coverage": "11 roadmaps",
+      "learning_hours": 550,
+      "projects": 11,
+      "primary_skills": [
+        "Python",
+        "SQL",
+        "Machine Learning",
+        "Data Engineering",
+        "MLOps",
+        "TensorFlow"
+      ],
+      "roadmaps": [
+        "data-analyst",
+        "bi-analyst",
+        "data-engineer",
+        "ml-engineer",
+        "ai-engineer",
+        "mlops-engineer",
+        "python-data",
+        "sql",
+        "analytics-engineer",
+        "llm",
+        "prompt-engineering"
+      ],
+      "file": "agents/04-data-ai-specialist.md"
+    },
+    {
+      "id": "mobile-game-specialist",
+      "name": "Mobile & Game Specialist",
+      "emoji": "📱",
+      "description": "Expert in mobile app and game development",
+      "expertise_level": 5,
+      "coverage": "9 roadmaps",
+      "learning_hours": 450,
+      "projects": 9,
+      "primary_skills": [
+        "iOS",
+        "Android",
+        "React Native",
+        "Flutter",
+        "Game Development",
+        "Unity"
+      ],
+      "roadmaps": [
+        "android",
+        "ios",
+        "swift",
+        "swiftui",
+        "react-native",
+        "flutter",
+        "game-development",
+        "server-side-game",
+        "unity"
+      ],
+      "file": "agents/05-mobile-game-specialist.md"
+    },
+    {
+      "id": "architecture-design-specialist",
+      "name": "Architecture & Design Specialist",
+      "emoji": "🏗️",
+      "description": "Expert in software architecture and system design",
+      "expertise_level": 5,
+      "coverage": "8 roadmaps",
+      "learning_hours": 450,
+      "projects": 8,
+      "primary_skills": [
+        "System Design",
+        "Design Patterns",
+        "Distributed Systems",
+        "Scalability",
+        "API Design",
+        "Microservices"
+      ],
+      "roadmaps": [
+        "software-architecture",
+        "system-design",
+        "design-patterns",
+        "system-design-interview",
+        "enterprise-architecture",
+        "microservices-architecture",
+        "architecture-decision-records",
+        "technology-selection"
+      ],
+      "file": "agents/06-architecture-design-specialist.md"
+    },
+    {
+      "id": "database-security-specialist",
+      "name": "Database & Security Specialist",
+      "emoji": "🔐",
+      "description": "Expert in databases, security, and compliance",
+      "expertise_level": 5,
+      "coverage": "10 roadmaps",
+      "learning_hours": 450,
+      "projects": 10,
+      "primary_skills": [
+        "SQL",
+        "NoSQL",
+        "Database Design",
+        "Cybersecurity",
+        "Encryption",
+        "Compliance"
+      ],
+      "roadmaps": [
+        "sql",
+        "postgresql-dba",
+        "mongodb",
+        "redis",
+        "cybersecurity",
+        "application-security",
+        "cryptography",
+        "cloud-security",
+        "compliance",
+        "blockchain"
+      ],
+      "file": "agents/07-database-security-specialist.md"
+    }
+  ],
+  "statistics": {
+    "total_agents": 7,
+    "total_roadmaps": 65,
+    "total_skills": 28,
+    "total_commands": 4,
+    "total_hooks": 10,
+    "total_learning_hours": 3100,
+    "total_projects": 100,
+    "average_expertise_level": 5.0,
+    "coverage_percentage": 100
+  },
+  "relationships": {
+    "frontend-specialist": ["backend-specialist", "architecture-design-specialist"],
+    "backend-specialist": ["frontend-specialist", "infrastructure-devops-specialist", "database-security-specialist"],
+    "infrastructure-devops-specialist": ["backend-specialist", "database-security-specialist"],
+    "data-ai-specialist": ["backend-specialist", "database-security-specialist"],
+    "mobile-game-specialist": ["backend-specialist", "architecture-design-specialist"],
+    "architecture-design-specialist": ["backend-specialist", "frontend-specialist", "infrastructure-devops-specialist"],
+    "database-security-specialist": ["backend-specialist", "data-ai-specialist", "infrastructure-devops-specialist"]
+  },
+  "metadata": {
+    "version": "1.0.0",
+    "created": "2025-01-01",
+    "updated": "2025-01-18",
+    "status": "production-ready",
+    "license": "MIT"
+  }
+}

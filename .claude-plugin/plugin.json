@@ -1,0 +1,108 @@
+{
+  "name": "developer-roadmap-learning-system",
+  "version": "1.0.0",
+  "description": "Comprehensive learning system covering 65+ development roadmaps organized into 7 specialized agents with interactive learning paths, skill assessments, and hands-on projects",
+  "author": "Plugin Agent Marketplace",
+  "license": "MIT",
+  "repository": "https://github.com/pluginagentmarketplace/custom-plugin-design-system",
+  "keywords": [
+    "learning",
+    "roadmap",
+    "development",
+    "agent-based",
+    "skill-assessment",
+    "project-based-learning"
+  ],
+  "agents": [
+    {
+      "name": "frontend-specialist",
+      "description": "Frontend development expert covering web technologies, frameworks, and UI/UX patterns",
+      "file": "agents/01-frontend-specialist.md"
+    },
+    {
+      "name": "backend-specialist",
+      "description": "Backend development expert covering server-side technologies, APIs, and databases",
+      "file": "agents/02-backend-specialist.md"
+    },
+    {
+      "name": "infrastructure-devops-specialist",
+      "description": "Infrastructure and DevOps expert covering deployment, cloud, containerization, and orchestration",
+      "file": "agents/03-infrastructure-devops-specialist.md"
+    },
+    {
+      "name": "data-ai-specialist",
+      "description": "Data science and AI expert covering machine learning, data engineering, and analytics",
+      "file": "agents/04-data-ai-specialist.md"
+    },
+    {
+      "name": "mobile-game-specialist",
+      "description": "Mobile and game development expert covering iOS, Android, React Native, Flutter, and game engines",
+      "file": "agents/05-mobile-game-specialist.md"
+    },
+    {
+      "name": "architecture-design-specialist",
+      "description": "Software architecture expert covering system design, design patterns, and architectural principles",
+      "file": "agents/06-architecture-design-specialist.md"
+    },
+    {
+      "name": "database-security-specialist",
+      "description": "Database and security expert covering SQL, NoSQL, cybersecurity, and compliance",
+      "file": "agents/07-database-security-specialist.md"
+    }
+  ],
+  "commands": [
+    {
+      "name": "learn",
+      "file": "commands/learn.md",
+      "description": "Start personalized learning path and roadmap selection"
+    },
+    {
+      "name": "explore-agents",
+      "file": "commands/explore-agents.md",
+      "description": "Discover all 7 specialized agents and their expertise areas"
+    },
+    {
+      "name": "assess",
+      "file": "commands/assess.md",
+      "description": "Evaluate your knowledge across different roadmaps"
+    },
+    {
+      "name": "projects",
+      "file": "commands/projects.md",
+      "description": "Browse hands-on projects and real-world learning scenarios"
+    }
+  ],
+  "skills": [
+    {
+      "name": "frontend-technologies",
+      "file": "skills/frontend-technologies/SKILL.md"
+    },
+    {
+      "name": "backend-technologies",
+      "file": "skills/backend-technologies/SKILL.md"
+    },
+    {
+      "name": "infrastructure-cloud",
+      "file": "skills/infrastructure-cloud/SKILL.md"
+    },
+    {
+      "name": "data-analytics",
+      "file": "skills/data-analytics/SKILL.md"
+    },
+    {
+      "name": "mobile-development",
+      "file": "skills/mobile-development/SKILL.md"
+    },
+    {
+      "name": "system-architecture",
+      "file": "skills/system-architecture/SKILL.md"
+    },
+    {
+      "name": "database-security",
+      "file": "skills/database-security/SKILL.md"
+    }
+  ],
+  "hooks": {
+    "file": "hooks/hooks.json"
+  }
+}
