@@ -1,0 +1,145 @@
+{
+  "name": "developer-roadmap",
+  "displayName": "Developer Roadmap Navigator",
+  "version": "1.0.0",
+  "description": "Comprehensive guide to 66+ developer career paths with interactive roadmaps, skill assessment, and personalized learning paths",
+  "author": "Claude Code Team",
+  "license": "MIT",
+  "keywords": [
+    "learning",
+    "career-development",
+    "skill-assessment",
+    "roadmap",
+    "frontend",
+    "backend",
+    "devops",
+    "data-science",
+    "mobile",
+    "architecture",
+    "engineering"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kamranahmedse/developer-roadmap"
+  },
+  "agents": [
+    {
+      "id": "frontend-specialist",
+      "name": "Frontend Specialist",
+      "description": "Expert in front-end development paths: React, Vue, Angular, Next.js, TypeScript",
+      "file": "agents/01-frontend-specialist.md"
+    },
+    {
+      "id": "backend-specialist",
+      "name": "Backend Specialist",
+      "description": "Expert in backend development paths: Node.js, PHP, Go, Python, Java, Spring Boot",
+      "file": "agents/02-backend-specialist.md"
+    },
+    {
+      "id": "devops-cloud-specialist",
+      "name": "DevOps & Cloud Specialist",
+      "description": "Expert in DevOps and cloud infrastructure: AWS, Kubernetes, Docker, Terraform, Linux",
+      "file": "agents/03-devops-cloud-specialist.md"
+    },
+    {
+      "id": "data-ai-specialist",
+      "name": "Data & AI Specialist",
+      "description": "Expert in data science and AI paths: Data Engineer, ML Engineer, AI, Data Scientist, Prompt Engineering",
+      "file": "agents/04-data-ai-specialist.md"
+    },
+    {
+      "id": "mobile-specialist",
+      "name": "Mobile Developer Specialist",
+      "description": "Expert in mobile development: iOS, Android, React Native, Flutter, SwiftUI",
+      "file": "agents/05-mobile-specialist.md"
+    },
+    {
+      "id": "architecture-specialist",
+      "name": "Architecture & System Design Specialist",
+      "description": "Expert in software architecture, system design, and high-level design patterns",
+      "file": "agents/06-architecture-specialist.md"
+    },
+    {
+      "id": "career-mentor",
+      "name": "Career Development Mentor",
+      "description": "Expert in personalized learning paths, career transitions, and skill assessment",
+      "file": "agents/07-career-mentor.md"
+    }
+  ],
+  "commands": [
+    {
+      "name": "explore",
+      "description": "Explore all 66+ developer roadmaps",
+      "file": "commands/explore.md"
+    },
+    {
+      "name": "assess",
+      "description": "Assess your current skills and identify gaps",
+      "file": "commands/assess.md"
+    },
+    {
+      "name": "roadmap",
+      "description": "Get detailed roadmap for a specific role",
+      "file": "commands/roadmap.md"
+    },
+    {
+      "name": "path",
+      "description": "Create personalized learning path",
+      "file": "commands/path.md"
+    }
+  ],
+  "skills": [
+    {
+      "id": "frontend-guide",
+      "name": "Frontend Development Guide",
+      "description": "Comprehensive guide to frontend technologies and learning resources",
+      "file": "skills/frontend/SKILL.md"
+    },
+    {
+      "id": "backend-guide",
+      "name": "Backend Development Guide",
+      "description": "Complete backend development roadmap and best practices",
+      "file": "skills/backend/SKILL.md"
+    },
+    {
+      "id": "devops-guide",
+      "name": "DevOps & Infrastructure Guide",
+      "description": "DevOps tools, cloud platforms, and infrastructure mastery",
+      "file": "skills/devops/SKILL.md"
+    },
+    {
+      "id": "data-ai-guide",
+      "name": "Data Science & AI Guide",
+      "description": "Data science, machine learning, and AI career paths",
+      "file": "skills/data-ai/SKILL.md"
+    },
+    {
+      "id": "mobile-guide",
+      "name": "Mobile Development Guide",
+      "description": "iOS, Android, and cross-platform mobile development",
+      "file": "skills/mobile/SKILL.md"
+    },
+    {
+      "id": "architecture-guide",
+      "name": "Architecture & Design Patterns",
+      "description": "Software architecture, design patterns, and system design",
+      "file": "skills/architecture/SKILL.md"
+    },
+    {
+      "id": "assessment-guide",
+      "name": "Skill Assessment & Learning Paths",
+      "description": "Tools and strategies for assessing skills and creating personalized learning paths",
+      "file": "skills/assessment/SKILL.md"
+    }
+  ],
+  "hooks": [
+    {
+      "event": "command-executed",
+      "handler": "scripts/track-progress.sh"
+    },
+    {
+      "event": "skill-invoked",
+      "handler": "scripts/log-skill-usage.sh"
+    }
+  ]
+}

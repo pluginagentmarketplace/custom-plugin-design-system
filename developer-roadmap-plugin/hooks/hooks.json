@@ -1,0 +1,25 @@
+{
+  "hooks": [
+    {
+      "name": "track-progress",
+      "event": "command-executed",
+      "description": "Track user progress through learning paths",
+      "script": "scripts/track-progress.sh",
+      "enabled": true
+    },
+    {
+      "name": "log-skill-usage",
+      "event": "skill-invoked",
+      "description": "Log which skills are being used most frequently",
+      "script": "scripts/log-skill-usage.sh",
+      "enabled": true
+    },
+    {
+      "name": "assessment-notification",
+      "event": "assessment-completed",
+      "description": "Send improvement suggestions after assessments",
+      "script": "scripts/assessment-notify.sh",
+      "enabled": true
+    }
+  ]
+}
