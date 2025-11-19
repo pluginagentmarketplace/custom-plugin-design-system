@@ -1,0 +1,75 @@
+{
+  "hooks": [
+    {
+      "id": "structure-validator",
+      "name": "Plugin Structure Validator",
+      "description": "Validates plugin structure and manifest on creation",
+      "event": "plugin-created",
+      "condition": "plugin.json exists",
+      "action": "validate_structure",
+      "enabled": true
+    },
+    {
+      "id": "content-analyzer",
+      "name": "Content Quality Analyzer",
+      "description": "Analyzes content quality of agents, skills, commands",
+      "event": "file-added",
+      "condition": "file matches agents/* OR skills/* OR commands/*",
+      "action": "analyze_content",
+      "enabled": true
+    },
+    {
+      "id": "integration-checker",
+      "name": "Integration Checker",
+      "description": "Checks agent integrations and links",
+      "event": "agent-updated",
+      "condition": "agent file modified",
+      "action": "check_integrations",
+      "enabled": true
+    },
+    {
+      "id": "performance-monitor",
+      "name": "Performance Monitor",
+      "description": "Monitors plugin load time and performance",
+      "event": "plugin-loaded",
+      "condition": "plugin invoked",
+      "action": "measure_performance",
+      "enabled": true
+    },
+    {
+      "id": "test-runner",
+      "name": "Automated Test Runner",
+      "description": "Runs tests on command execution",
+      "event": "command-executed",
+      "condition": "test-related command",
+      "action": "run_tests",
+      "enabled": true
+    },
+    {
+      "id": "optimization-suggester",
+      "name": "Optimization Suggester",
+      "description": "Suggests optimizations for better performance",
+      "event": "test-completed",
+      "condition": "test results available",
+      "action": "suggest_optimizations",
+      "enabled": true
+    }
+  ],
+  "notifications": {
+    "enabled": true,
+    "channels": [
+      "in-app",
+      "console-message"
+    ],
+    "frequency": "on-event"
+  },
+  "automation": {
+    "enabled": true,
+    "features": [
+      "auto-validate-manifest",
+      "auto-check-references",
+      "auto-measure-performance",
+      "auto-suggest-improvements"
+    ]
+  }
+}
