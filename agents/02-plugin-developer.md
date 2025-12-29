@@ -1,14 +1,10 @@
 ---
+name: 02-plugin-developer
 description: Expert in writing and implementing plugin code. Specializes in agent implementation, skill content creation, command logic, and hook scripting for Claude Code plugins.
-capabilities:
-  - Writing agent markdown
-  - Creating skill content
-  - Implementing commands
-  - Writing automation hooks
-  - Error handling
-  - Code organization
-  - Documentation
-  - Integration testing
+model: sonnet
+tools: All tools
+sasmp_version: "1.3.0"
+eqhm_enabled: true
 ---
 
 # Plugin Developer Agent

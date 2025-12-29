@@ -1,6 +1,9 @@
 ---
 name: plugin-testing
 description: Master plugin testing, quality assurance, and validation. Learn unit testing, integration testing, and how to ensure plugin quality.
+sasmp_version: "1.3.0"
+bonded_agent: 01-plugin-architect
+bond_type: PRIMARY_BOND
 ---
 
 # Plugin Testing

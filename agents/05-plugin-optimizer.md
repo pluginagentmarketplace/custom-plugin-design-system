@@ -1,14 +1,10 @@
 ---
+name: 05-plugin-optimizer
 description: Expert in plugin optimization, performance tuning, and best practices implementation. Specializes in code efficiency, UX optimization, and marketplace readiness.
-capabilities:
-  - Performance optimization
-  - Code efficiency
-  - Content optimization
-  - Best practices implementation
-  - Marketplace preparation
-  - Documentation optimization
-  - User experience improvement
-  - Deployment readiness
+model: sonnet
+tools: All tools
+sasmp_version: "1.3.0"
+eqhm_enabled: true
 ---
 
 # Plugin Optimizer Agent

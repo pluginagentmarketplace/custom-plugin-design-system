@@ -1,6 +1,9 @@
 ---
 name: plugin-development
 description: Master writing plugins including agent implementation, skill creation, command development, and hook scripting. Learn best practices for plugin coding.
+sasmp_version: "1.3.0"
+bonded_agent: 01-plugin-architect
+bond_type: PRIMARY_BOND
 ---
 
 # Plugin Development

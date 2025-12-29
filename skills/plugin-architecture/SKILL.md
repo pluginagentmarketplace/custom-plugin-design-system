@@ -1,6 +1,9 @@
 ---
 name: plugin-architecture
 description: Master plugin folder structure, manifest design, and architectural patterns. Learn to organize plugins for scalability and maintainability.
+sasmp_version: "1.3.0"
+bonded_agent: 01-plugin-architect
+bond_type: PRIMARY_BOND
 ---
 
 # Plugin Architecture

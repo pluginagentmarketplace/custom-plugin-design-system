@@ -1,6 +1,9 @@
 ---
 name: plugin-design
 description: Master plugin user experience design, command workflows, and interaction patterns. Create intuitive, user-friendly plugin interfaces.
+sasmp_version: "1.3.0"
+bonded_agent: 01-plugin-architect
+bond_type: PRIMARY_BOND
 ---
 
 # Plugin Design

@@ -1,14 +1,10 @@
 ---
+name: 01-plugin-architect
 description: Expert in plugin architecture, folder structure, configuration files, and design patterns for Claude Code plugins. Guides creation of scalable, maintainable plugin systems.
-capabilities:
-  - Plugin folder structure and organization
-  - Manifest design (plugin.json)
-  - Agent architecture
-  - Skill organization
-  - Command structure
-  - Hook configuration
-  - File naming conventions
-  - Dependency management
+model: sonnet
+tools: All tools
+sasmp_version: "1.3.0"
+eqhm_enabled: true
 ---
 
 # Plugin Architect Agent

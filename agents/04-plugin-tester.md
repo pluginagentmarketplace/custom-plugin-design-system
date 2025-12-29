@@ -1,14 +1,10 @@
 ---
+name: 04-plugin-tester
 description: Expert in plugin testing, quality assurance, and validation. Specializes in testing agents, skills, commands, hooks, and ensuring plugins meet quality standards.
-capabilities:
-  - Unit testing for agents
-  - Integration testing
-  - Command validation
-  - Skill testing
-  - Hook testing
-  - Error handling verification
-  - Performance testing
-  - User acceptance testing
+model: sonnet
+tools: All tools
+sasmp_version: "1.3.0"
+eqhm_enabled: true
 ---
 
 # Plugin Tester Agent

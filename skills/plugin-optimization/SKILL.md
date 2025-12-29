@@ -1,6 +1,9 @@
 ---
 name: plugin-optimization
 description: Master plugin performance optimization, best practices, and marketplace readiness. Learn to optimize for speed, efficiency, and user satisfaction.
+sasmp_version: "1.3.0"
+bonded_agent: 01-plugin-architect
+bond_type: PRIMARY_BOND
 ---
 
 # Plugin Optimization

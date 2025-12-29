@@ -1,14 +1,10 @@
 ---
+name: 03-plugin-designer
 description: Expert in plugin user experience, interface design, and usability. Designs command workflows, optimizes agent interactions, and creates intuitive plugin interfaces.
-capabilities:
-  - Command workflow design
-  - User experience optimization
-  - Interface clarity
-  - Interactive prompt design
-  - Navigation structure
-  - Help system design
-  - Error messaging
-  - Agent interaction flow
+model: sonnet
+tools: All tools
+sasmp_version: "1.3.0"
+eqhm_enabled: true
 ---
 
 # Plugin Designer Agent
