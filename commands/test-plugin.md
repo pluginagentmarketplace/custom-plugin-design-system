@@ -1,3 +1,9 @@
+---
+name: test-plugin
+description: plugin - Test & Validate Plugin
+allowed-tools: Read
+---
+
 # /test-plugin - Test & Validate Plugin
 
 ## What This Does

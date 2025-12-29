@@ -1,0 +1,15 @@
+{
+  "name": "pluginagentmarketplace-design-system",
+  "owner": {
+    "name": "Plugin Agent Marketplace",
+    "email": "pluginagentmarketplace@gmail.com"
+  },
+  "plugins": [
+    {
+      "name": "custom-plugin-design-system",
+      "source": "./",
+      "description": "Claude Code plugin for design system development",
+      "version": "1.0.0"
+    }
+  ]
+}

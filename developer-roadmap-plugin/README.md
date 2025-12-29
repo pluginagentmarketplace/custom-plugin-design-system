@@ -19,10 +19,8 @@ The Developer Roadmap Plugin brings the power of [roadmap.sh](https://roadmap.sh
 
 ```bash
 # Add to Claude Code
-Add plugin: developer-roadmap-plugin
 
 # Or load locally
-Load from: ./developer-roadmap-plugin
 ```
 
 ### Using the Plugin
@@ -248,7 +246,6 @@ QA Engineer, Product Manager, Engineering Manager, Technical Writer, DevRel Engi
 ## Plugin Structure
 
 ```
-developer-roadmap-plugin/
 ├── .claude-plugin/
 │   └── plugin.json                 # Plugin manifest
 ├── agents/                         # 7 Expert agents
@@ -363,7 +360,6 @@ developer-roadmap-plugin/
 
 ### Official Links
 - [Roadmap.sh](https://roadmap.sh) - Interactive roadmaps
-- [Roadmap.sh GitHub](https://github.com/kamranahmedse/developer-roadmap) - Source repository
 - [Interactive Roadmaps](https://roadmap.sh) - Visual learning paths
 
 ### Complementary Resources
@@ -393,7 +389,6 @@ For questions or issues:
 
 ## Roadmap.sh Attribution
 
-This plugin is powered by [roadmap.sh](https://roadmap.sh), created by [kamranahmedse](https://github.com/kamranahmedse).
 
 The original project provides interactive, community-driven roadmaps for developers across all specializations. Visit [roadmap.sh](https://roadmap.sh) for interactive versions of these roadmaps.
 

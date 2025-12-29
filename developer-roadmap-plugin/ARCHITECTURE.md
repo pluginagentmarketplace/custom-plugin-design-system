@@ -4,12 +4,10 @@ This document explains the structure, design, and components of the Developer Ro
 
 ## Overview
 
-The Developer Roadmap Plugin is a comprehensive learning and career guidance system built as a Claude Code plugin. It leverages the official [roadmap.sh](https://github.com/kamranahmedse/developer-roadmap) project to provide structured career paths for developers.
 
 ## Plugin Architecture
 
 ```
-developer-roadmap-plugin/
 │
 ├── .claude-plugin/
 │   └── plugin.json ..................... Plugin manifest & configuration
@@ -61,7 +59,6 @@ developer-roadmap-plugin/
 **Key Sections**:
 ```json
 {
-  "name": "developer-roadmap",
   "version": "1.0.0",
   "agents": [...],           // 7 agents
   "commands": [...],         // 4 commands

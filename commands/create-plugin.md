@@ -1,3 +1,9 @@
+---
+name: create-plugin
+description: plugin - Create New Plugin
+allowed-tools: Read
+---
+
 # /create-plugin - Create New Plugin
 
 ## What This Does

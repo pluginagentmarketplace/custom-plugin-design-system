@@ -1,3 +1,9 @@
+---
+name: optimize-plugin
+description: plugin - Optimize & Deploy Plugin
+allowed-tools: Read
+---
+
 # /optimize-plugin - Optimize & Deploy Plugin
 
 ## What This Does

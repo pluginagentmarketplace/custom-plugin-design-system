@@ -1,284 +1,257 @@
-# Custom Plugin Design System
+<div align="center">
 
-**Complete system for designing, building, testing, and optimizing custom Claude Code plugins.**
+<!-- Animated Typing Banner -->
+<img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=28&duration=3000&pause=1000&color=2E9EF7&center=true&vCenter=true&multiline=true&repeat=true&width=600&height=100&lines=Design+System+Assistant;5+Agents+%7C+5+Skills;Claude+Code+Plugin" alt="Design System Assistant" />
 
-## 🎯 What This Plugin Does
+<br/>
 
-Teaches you how to create professional, production-ready Claude Code plugins from scratch. Includes architecture guidance, implementation best practices, testing strategies, and deployment optimization.
+<!-- Badge Row 1: Status Badges -->
+[![Version](https://img.shields.io/badge/Version-1.0.0-blue?style=for-the-badge)](https://github.com/pluginagentmarketplace/custom-plugin-design-system/releases)
+[![License](https://img.shields.io/badge/License-Custom-yellow?style=for-the-badge)](LICENSE)
+[![Status](https://img.shields.io/badge/Status-Production-brightgreen?style=for-the-badge)](#)
+[![SASMP](https://img.shields.io/badge/SASMP-v1.3.0-blueviolet?style=for-the-badge)](#)
 
-## 📦 What You Get
+<!-- Badge Row 2: Content Badges -->
+[![Agents](https://img.shields.io/badge/Agents-5-orange?style=flat-square&logo=robot)](#-agents)
+[![Skills](https://img.shields.io/badge/Skills-5-purple?style=flat-square&logo=lightning)](#-skills)
+[![Commands](https://img.shields.io/badge/Commands-4-green?style=flat-square&logo=terminal)](#-commands)
 
-### 5 Specialized Agents
-```
-🏗️  Plugin Architect      - Folder structure, manifest, architecture
-💻 Plugin Developer      - Implementation, coding, best practices
-🎨 Plugin Designer       - UX, commands, workflows, interface
-🧪 Plugin Tester         - Testing, validation, quality assurance
-⚡ Plugin Optimizer       - Performance, best practices, deployment
-```
+<br/>
 
-### 5 In-Depth Skills
-```
-📐 plugin-architecture   - Structure, organization, design patterns
-💾 plugin-development    - Implementation guides and examples
-🎭 plugin-design         - UX patterns, commands, workflows
-✓  plugin-testing        - Testing strategies and quality metrics
-🚀 plugin-optimization   - Performance and deployment readiness
-```
-
-### 4 Interactive Commands
-```
-/create-plugin           - Create new plugin with guided setup
-/design-plugin           - Design and review architecture
-/test-plugin             - Validate and test plugin
-/optimize-plugin         - Optimize and prepare for deployment
-```
-
-### 6 Automation Hooks
-- Structure validation
-- Content analysis
-- Integration checking
-- Performance monitoring
-- Test automation
-- Optimization suggestions
-
-## 🚀 Quick Start
-
-### Installation
-
-```bash
-# Single line installation
-git clone https://github.com/pluginagentmarketplace/custom-plugin-design-system.git ~/.claude-code/plugins/
-```
-
-### First Time
-
-```
-1. /create-plugin my-plugin
-2. /design-plugin my-plugin
-3. /test-plugin my-plugin
-4. /optimize-plugin my-plugin
-```
-
-## 📚 Complete Coverage
-
-| Topic | Details |
-|-------|---------|
-| **Architecture** | Folder structure, manifest design, patterns |
-| **Development** | Agent implementation, skills, commands, hooks |
-| **Design** | UX patterns, workflows, interface design |
-| **Testing** | Unit tests, integration, performance testing |
-| **Optimization** | Performance tuning, best practices, deployment |
-
-## 🎓 Learn By Doing
-
-### Phase 1: Design (Hour 1-2)
-- Understand plugin architecture
-- Plan your plugin structure
-- Design agent roles and integrations
-
-### Phase 2: Build (Hour 3-6)
-- Create plugin from scratch
-- Implement agents and skills
-- Build commands
-- Configure hooks
-
-### Phase 3: Test (Hour 7-8)
-- Validate structure
-- Test functionality
-- Check quality
-- Fix issues
-
-### Phase 4: Optimize (Hour 9-10)
-- Performance optimization
-- Best practices review
-- Marketplace preparation
-- Final deployment
-
-## 💡 Example Plugins
-
-The system teaches you by example:
-
-```markdown
-# Creating a Data Processing Plugin
-
-1. Use /create-plugin to scaffold
-2. Ask @plugin-architect for structure advice
-3. Follow @plugin-developer's implementation guides
-4. Design UX with @plugin-designer
-5. Test thoroughly with /test-plugin
-6. Optimize with /optimize-plugin
-```
-
-## 🎯 Perfect For
-
-✅ **Learning Claude Code plugins** - From zero to production
-✅ **Building custom tools** - Domain-specific functionality
-✅ **Marketplace submission** - Production-ready plugins
-✅ **Team training** - Shared plugin development standards
-✅ **Best practices** - Industry-standard approaches
-
-## 📊 Plugin Stats
-
-```
-Agents:          5
-Skills:          5
-Commands:        4
-Hooks:           6
-Learning Hours:  10-15 hours
-Content Lines:   2,500+
-Code Examples:   50+
-Best Practices:  100+
-```
-
-## ✨ Key Features
-
-✅ **Complete Framework** - Everything you need to build plugins
-✅ **Best Practices** - Industry standards and patterns
-✅ **Hands-On** - Learn by creating real plugins
-✅ **Production-Ready** - Code ready for marketplace
-✅ **Well-Documented** - Comprehensive guides and examples
-✅ **Interactive** - Commands guide you through process
-✅ **Automated** - Hooks validate and optimize automatically
-
-## 🔄 Workflow
-
-```
-Create Plugin
-    ↓
-Design Architecture
-    ↓
-Implement Components
-    ↓
-Test Everything
-    ↓
-Optimize Performance
-    ↓
-Deploy to Marketplace
-```
-
-## 📖 Documentation
-
-- **Agents**: Detailed expertise areas and capabilities
-- **Skills**: Practical guides with working examples
-- **Commands**: Step-by-step workflows
-- **This README**: Quick reference
-
-## 🤝 Integration
-
-Works seamlessly with:
-- Claude Code plugin system
-- GitHub for version control
-- Plugin marketplace
-- Standard development tools
-
-## 💾 What's Included
-
-```
-.claude-plugin/
-├── plugin.json              # Plugin manifest
-
-agents/                      # 5 specialized agents
-├── 01-plugin-architect.md
-├── 02-plugin-developer.md
-├── 03-plugin-designer.md
-├── 04-plugin-tester.md
-└── 05-plugin-optimizer.md
-
-skills/                      # 5 detailed skills
-├── plugin-architecture/SKILL.md
-├── plugin-development/SKILL.md
-├── plugin-design/SKILL.md
-├── plugin-testing/SKILL.md
-└── plugin-optimization/SKILL.md
-
-commands/                    # 4 interactive commands
-├── create-plugin.md
-├── design-plugin.md
-├── test-plugin.md
-└── optimize-plugin.md
-
-hooks/
-└── hooks.json              # 6 automation hooks
-
-README.md                    # This file
-```
-
-## 🎓 Learning Path
-
-### Beginner
-1. Understand plugin structure
-2. Create your first plugin
-3. Follow design guidelines
-4. Test and validate
-
-### Intermediate
-1. Design complex architectures
-2. Implement multiple agents
-3. Create custom skills
-4. Optimize performance
-
-### Advanced
-1. Enterprise plugin patterns
-2. Multi-agent systems
-3. Performance optimization
-4. Marketplace best practices
-
-## 🔗 Resources
-
-**Official Documentation**
-- [Claude Code Docs](https://docs.claude.com)
-- [Plugin Development](https://docs.claude.com/plugins)
-
-**Learn More**
-- Ask @plugin-architect for structure help
-- Ask @plugin-developer for implementation
-- Ask @plugin-designer for UX guidance
-- Ask @plugin-tester for quality checks
-- Ask @plugin-optimizer for deployment
-
-## 📝 Tips for Success
-
-1. **Start simple** - Begin with basic plugin
-2. **Follow patterns** - Use proven approaches
-3. **Test early** - Validate continuously
-4. **Document** - Write clear documentation
-5. **Optimize** - Performance matters
-6. **Get feedback** - Review with team
-7. **Iterate** - Improve based on learnings
-
-## 🎯 Next Steps
-
-```
-1. Install plugin: /create-plugin my-plugin
-2. Design: /design-plugin my-plugin
-3. Test: /test-plugin my-plugin
-4. Optimize: /optimize-plugin my-plugin
-5. Deploy: Push to marketplace
-```
-
-## 📊 Success Metrics
-
-After completing this system, you should be able to:
-
-✅ Create production-ready plugins
-✅ Follow Claude Code standards
-✅ Design scalable architectures
-✅ Implement best practices
-✅ Test comprehensively
-✅ Optimize performance
-✅ Deploy to marketplace
-
-## 📄 License
-
-MIT - Use freely for any purpose
-
-## 🙏 Credits
-
-Created for the Claude Code plugin community.
+<!-- Quick CTA Row -->
+[📦 **Install Now**](#-quick-start) · [🤖 **Explore Agents**](#-agents) · [📖 **Documentation**](#-documentation) · [⭐ **Star this repo**](https://github.com/pluginagentmarketplace/custom-plugin-design-system)
 
 ---
 
-**Ready to build amazing plugins? Start with `/create-plugin` now!**
+### What is this?
 
-**Status**: ✅ Production Ready | **Version**: 1.0.0 | **Updated**: 2025
+> **Design System Assistant** is a Claude Code plugin with **5 agents** and **5 skills** for design system development.
+
+</div>
+
+---
+
+## 📑 Table of Contents
+
+<details>
+<summary>Click to expand</summary>
+
+- [Quick Start](#-quick-start)
+- [Features](#-features)
+- [Agents](#-agents)
+- [Skills](#-skills)
+- [Commands](#-commands)
+- [Documentation](#-documentation)
+- [Contributing](#-contributing)
+- [License](#-license)
+
+</details>
+
+---
+
+## 🚀 Quick Start
+
+### Prerequisites
+
+- Claude Code CLI v2.0.27+
+- Active Claude subscription
+
+### Installation (Choose One)
+
+<details open>
+<summary><strong>Option 1: From Marketplace (Recommended)</strong></summary>
+
+```bash
+# Step 1️⃣ Add the marketplace
+/plugin add marketplace pluginagentmarketplace/custom-plugin-design-system
+
+# Step 2️⃣ Install the plugin
+/plugin install custom-plugin-design-system@pluginagentmarketplace-design-system
+
+# Step 3️⃣ Restart Claude Code
+# Close and reopen your terminal/IDE
+```
+
+</details>
+
+<details>
+<summary><strong>Option 2: Local Installation</strong></summary>
+
+```bash
+# Clone the repository
+git clone https://github.com/pluginagentmarketplace/custom-plugin-design-system.git
+cd custom-plugin-design-system
+
+# Load locally
+/plugin load .
+
+# Restart Claude Code
+```
+
+</details>
+
+### ✅ Verify Installation
+
+After restart, you should see these agents:
+
+```
+custom-plugin-design-system:05-plugin-optimizer
+custom-plugin-design-system:01-plugin-architect
+custom-plugin-design-system:04-plugin-tester
+custom-plugin-design-system:03-plugin-designer
+custom-plugin-design-system:02-plugin-developer
+```
+
+---
+
+## ✨ Features
+
+| Feature | Description |
+|---------|-------------|
+| 🤖 **5 Agents** | Specialized AI agents for design system tasks |
+| 🛠️ **5 Skills** | Reusable capabilities with Golden Format |
+| ⌨️ **4 Commands** | Quick slash commands |
+| 🔄 **SASMP v1.3.0** | Full protocol compliance |
+
+---
+
+## 🤖 Agents
+
+### 5 Specialized Agents
+
+| # | Agent | Purpose |
+|---|-------|---------|
+| 1 | **05-plugin-optimizer** | Expert in plugin optimization, performance tuning, and best  |
+| 2 | **01-plugin-architect** | Expert in plugin architecture, folder structure, configurati |
+| 3 | **04-plugin-tester** | Expert in plugin testing, quality assurance, and validation. |
+| 4 | **03-plugin-designer** | Expert in plugin user experience, interface design, and usab |
+| 5 | **02-plugin-developer** | Expert in writing and implementing plugin code. Specializes  |
+
+---
+
+## 🛠️ Skills
+
+### Available Skills
+
+| Skill | Description | Invoke |
+|-------|-------------|--------|
+| `plugin-testing` | Master plugin testing, quality assurance, and validation. Le | `Skill("custom-plugin-design-system:plugin-testing")` |
+| `plugin-optimization` | Master plugin performance optimization, best practices, and  | `Skill("custom-plugin-design-system:plugin-optimization")` |
+| `plugin-design` | Master plugin user experience design, command workflows, and | `Skill("custom-plugin-design-system:plugin-design")` |
+| `plugin-development` | Master writing plugins including agent implementation, skill | `Skill("custom-plugin-design-system:plugin-development")` |
+| `plugin-architecture` | Master plugin folder structure, manifest design, and archite | `Skill("custom-plugin-design-system:plugin-architecture")` |
+
+---
+
+## ⌨️ Commands
+
+| Command | Description |
+|---------|-------------|
+| `/design-plugin` | plugin - Design Plugin Architecture |
+| `/optimize-plugin` | plugin - Optimize & Deploy Plugin |
+| `/test-plugin` | plugin - Test & Validate Plugin |
+| `/create-plugin` | plugin - Create New Plugin |
+
+---
+
+## 📚 Documentation
+
+| Document | Description |
+|----------|-------------|
+| [CHANGELOG.md](CHANGELOG.md) | Version history |
+| [CONTRIBUTING.md](CONTRIBUTING.md) | How to contribute |
+| [LICENSE](LICENSE) | License information |
+
+---
+
+## 📁 Project Structure
+
+<details>
+<summary>Click to expand</summary>
+
+```
+custom-plugin-design-system/
+├── 📁 .claude-plugin/
+│   ├── plugin.json
+│   └── marketplace.json
+├── 📁 agents/              # 5 agents
+├── 📁 skills/              # 5 skills (Golden Format)
+├── 📁 commands/            # 4 commands
+├── 📁 hooks/
+├── 📄 README.md
+├── 📄 CHANGELOG.md
+└── 📄 LICENSE
+```
+
+</details>
+
+---
+
+## 📅 Metadata
+
+| Field | Value |
+|-------|-------|
+| **Version** | 1.0.0 |
+| **Last Updated** | 2025-12-29 |
+| **Status** | Production Ready |
+| **SASMP** | v1.3.0 |
+| **Agents** | 5 |
+| **Skills** | 5 |
+| **Commands** | 4 |
+
+---
+
+## 🤝 Contributing
+
+Contributions are welcome! Please read our [Contributing Guide](CONTRIBUTING.md).
+
+1. Fork the repository
+2. Create your feature branch
+3. Follow the Golden Format for new skills
+4. Submit a pull request
+
+---
+
+## ⚠️ Security
+
+> **Important:** This repository contains third-party code and dependencies.
+>
+> - ✅ Always review code before using in production
+> - ✅ Check dependencies for known vulnerabilities
+> - ✅ Follow security best practices
+> - ✅ Report security issues privately via [Issues](../../issues)
+
+---
+
+## 📝 License
+
+Copyright © 2025 **Dr. Umit Kacar** & **Muhsin Elcicek**
+
+Custom License - See [LICENSE](LICENSE) for details.
+
+---
+
+## 👥 Contributors
+
+<table>
+<tr>
+<td align="center">
+<strong>Dr. Umit Kacar</strong><br/>
+Senior AI Researcher & Engineer
+</td>
+<td align="center">
+<strong>Muhsin Elcicek</strong><br/>
+Senior Software Architect
+</td>
+</tr>
+</table>
+
+---
+
+<div align="center">
+
+**Made with ❤️ for the Claude Code Community**
+
+[![GitHub](https://img.shields.io/badge/GitHub-pluginagentmarketplace-black?style=for-the-badge&logo=github)](https://github.com/pluginagentmarketplace)
+
+</div>

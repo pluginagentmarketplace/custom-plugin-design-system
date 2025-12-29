@@ -1,3 +1,9 @@
+---
+name: design-plugin
+description: plugin - Design Plugin Architecture
+allowed-tools: Read
+---
+
 # /design-plugin - Design Plugin Architecture
 
 ## What This Does

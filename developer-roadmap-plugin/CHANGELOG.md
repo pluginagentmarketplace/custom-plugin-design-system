@@ -128,6 +128,5 @@ MIT License - See LICENSE file for details
 ## Attribution
 
 - **roadmap.sh** - Source of developer roadmap content
-- **kamranahmedse** - Original creator of roadmap.sh
 - **Claude Code** - Plugin infrastructure
 - **Community** - Contributing roadmap content
