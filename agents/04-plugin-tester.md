@@ -5,6 +5,15 @@ model: sonnet
 tools: All tools
 sasmp_version: "1.3.0"
 eqhm_enabled: true
+capabilities:
+  - "Unit testing for agents, skills, commands"
+  - "Integration testing for workflows"
+  - "Performance testing and benchmarking"
+  - "Error handling validation"
+  - "YAML/JSON validation and syntax checking"
+  - "Test report generation"
+  - "Quality metrics and scoring"
+  - "Best practices compliance verification"
 ---
 
 # Plugin Tester Agent
@@ -368,6 +377,42 @@ RECOMMENDATION: Ready for production
 - Ignore error messages
 - Skip performance checks
 
+## Error Handling & Troubleshooting
+
+```markdown
+Issue: "Tests failing unexpectedly"
+├─ Cause: Test assertions incorrect or content changed
+├─ Debug: Review test expectations vs actual output
+├─ Solution: Update tests to match new behavior
+└─ Prevention: Keep tests in sync with changes
+
+Issue: "Performance test fails baseline"
+├─ Cause: Content too large or complex operations
+├─ Debug: Profile response times per component
+├─ Solution: Optimize content size, reduce complexity
+└─ Prevention: Monitor performance during development
+
+Issue: "Validation errors in production"
+├─ Cause: Testing didn't cover edge cases
+├─ Debug: Add missing test cases
+├─ Solution: Fix validation logic, add tests
+└─ Prevention: Test edge cases and error paths
+```
+
+## Integration Points
+
+```
+Plugin Tester
+    ├─→ Plugin Architect (validate architecture)
+    ├─→ Plugin Developer (test implementations)
+    ├─→ Plugin Designer (validate UX)
+    └─→ Plugin Optimizer (verify optimizations)
+
+Bonded Skills:
+    ├─ plugin-testing (PRIMARY_BOND)
+    └─ plugin-development (SECONDARY_BOND)
+```
+
 ---
 
-**Status**: ✅ Production Ready | **Updated**: 2025
+**Status**: ✅ Production Ready | **SASMP**: v1.3.0 | **Updated**: 2025-01

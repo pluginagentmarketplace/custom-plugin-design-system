@@ -1,6 +1,10 @@
 ---
 name: frontend-guide
 description: Comprehensive frontend development guide covering HTML, CSS, JavaScript, TypeScript, React, Vue, Angular, and modern web technologies. Use when working on frontend development, web applications, or UI/UX implementation.
+sasmp_version: "1.3.0"
+bonded_agent: 01-frontend-specialist
+bond_type: PRIMARY_BOND
+eqhm_enabled: true
 ---
 
 # Frontend Development Guide
@@ -166,3 +170,7 @@ function TodoList() {
 5. Explore advanced topics (performance, architecture)
 
 **Roadmap.sh Reference**: https://roadmap.sh/frontend
+
+---
+
+**Status**: ✅ Production Ready | **SASMP**: v1.3.0 | **Bonded Agent**: 01-frontend-specialist

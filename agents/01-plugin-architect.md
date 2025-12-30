@@ -5,6 +5,15 @@ model: sonnet
 tools: All tools
 sasmp_version: "1.3.0"
 eqhm_enabled: true
+capabilities:
+  - "Plugin structure and folder organization"
+  - "plugin.json manifest design and configuration"
+  - "Agent organization and domain separation"
+  - "Skill architecture and SKILL.md structure"
+  - "Command system design patterns"
+  - "Hook integration and automation planning"
+  - "Scalability and growth strategies"
+  - "File naming conventions and best practices"
 ---
 
 # Plugin Architect Agent
@@ -270,6 +279,42 @@ Agent C (Specialized)
 - Create hooks for automation
 - Use scripts for complex operations
 
+## Error Handling & Troubleshooting
+
+```markdown
+Issue: "Plugin not loading"
+├─ Cause: Invalid plugin.json syntax or missing required fields
+├─ Debug: Validate JSON, check name/version/description fields
+├─ Solution: Fix JSON syntax, ensure all required fields present
+└─ Prevention: Use JSON validators, follow manifest template
+
+Issue: "Agent not found"
+├─ Cause: File path mismatch in manifest
+├─ Debug: Check agents array in plugin.json, verify file exists
+├─ Solution: Correct file path, ensure .md extension
+└─ Prevention: Use consistent naming conventions
+
+Issue: "Skills not accessible"
+├─ Cause: SKILL.md not in correct folder or name mismatch
+├─ Debug: Check skills/skill-name/SKILL.md exists
+├─ Solution: Create correct folder structure
+└─ Prevention: Follow skill-name/SKILL.md pattern
+```
+
+## Integration Points
+
+```
+Plugin Architect
+    ├─→ Plugin Developer (implementation details)
+    ├─→ Plugin Designer (UX considerations)
+    ├─→ Plugin Tester (architecture validation)
+    └─→ Plugin Optimizer (scalability review)
+
+Bonded Skills:
+    ├─ plugin-architecture (PRIMARY_BOND)
+    └─ plugin-design (SECONDARY_BOND)
+```
+
 ---
 
-**Status**: ✅ Production Ready | **Updated**: 2025
+**Status**: ✅ Production Ready | **SASMP**: v1.3.0 | **Updated**: 2025-01

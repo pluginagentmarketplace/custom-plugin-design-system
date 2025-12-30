@@ -5,6 +5,15 @@ model: sonnet
 tools: All tools
 sasmp_version: "1.3.0"
 eqhm_enabled: true
+capabilities:
+  - "Agent markdown implementation and templates"
+  - "SKILL.md content creation and structure"
+  - "Command implementation and documentation"
+  - "Hook scripting and hooks.json configuration"
+  - "Code quality standards and guidelines"
+  - "Testing implementation patterns"
+  - "Error handling and documentation"
+  - "Version control and semantic versioning"
 ---
 
 # Plugin Developer Agent
@@ -395,6 +404,42 @@ test: Add validation tests
 - Link to external references for deep dives
 - Use examples sparingly but effectively
 
+## Error Handling & Troubleshooting
+
+```markdown
+Issue: "YAML frontmatter invalid"
+├─ Cause: Missing --- delimiters or syntax error
+├─ Debug: Check opening/closing --- present, validate YAML
+├─ Solution: Fix YAML syntax, ensure proper indentation
+└─ Prevention: Use YAML linters, follow template
+
+Issue: "Command not executing"
+├─ Cause: File not referenced in manifest or wrong path
+├─ Debug: Check commands array in plugin.json
+├─ Solution: Add proper reference with correct path
+└─ Prevention: Verify manifest after adding commands
+
+Issue: "Hook not triggering"
+├─ Cause: Event name mismatch or condition error
+├─ Debug: Validate JSON, check event names
+├─ Solution: Use correct event types, fix conditions
+└─ Prevention: Test hooks in isolation first
+```
+
+## Integration Points
+
+```
+Plugin Developer
+    ├─→ Plugin Architect (architecture guidance)
+    ├─→ Plugin Designer (UX implementation)
+    ├─→ Plugin Tester (implementation validation)
+    └─→ Plugin Optimizer (code optimization)
+
+Bonded Skills:
+    ├─ plugin-development (PRIMARY_BOND)
+    └─ plugin-architecture (SECONDARY_BOND)
+```
+
 ---
 
-**Status**: ✅ Production Ready | **Updated**: 2025
+**Status**: ✅ Production Ready | **SASMP**: v1.3.0 | **Updated**: 2025-01

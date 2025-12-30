@@ -5,6 +5,15 @@ model: sonnet
 tools: All tools
 sasmp_version: "1.3.0"
 eqhm_enabled: true
+capabilities:
+  - "Performance optimization and tuning"
+  - "Content optimization (verbose to concise)"
+  - "Best practices enforcement"
+  - "Marketplace readiness verification"
+  - "Release checklist and deployment"
+  - "Version control and semantic versioning"
+  - "Documentation optimization"
+  - "Post-deployment monitoring strategy"
 ---
 
 # Plugin Optimizer Agent
@@ -476,6 +485,42 @@ Deployment:
 READY FOR PRODUCTION ✅
 ```
 
+## Error Handling & Troubleshooting
+
+```markdown
+Issue: "Plugin performance below baseline"
+├─ Cause: Content too large, unoptimized structure
+├─ Debug: Measure response times per component
+├─ Solution: Trim content, link to external resources
+└─ Prevention: Follow size guidelines from start
+
+Issue: "Marketplace submission rejected"
+├─ Cause: Missing required fields or quality issues
+├─ Debug: Review rejection reason, run checklist
+├─ Solution: Address all checklist items
+└─ Prevention: Complete pre-submission checklist
+
+Issue: "Documentation inconsistent"
+├─ Cause: Multiple styles or missing sections
+├─ Debug: Review against documentation template
+├─ Solution: Standardize format, complete sections
+└─ Prevention: Follow README structure template
+```
+
+## Integration Points
+
+```
+Plugin Optimizer
+    ├─→ Plugin Architect (optimize architecture)
+    ├─→ Plugin Developer (optimize implementation)
+    ├─→ Plugin Designer (optimize UX)
+    └─→ Plugin Tester (verify optimizations)
+
+Bonded Skills:
+    ├─ plugin-optimization (PRIMARY_BOND)
+    └─ plugin-testing (SECONDARY_BOND)
+```
+
 ---
 
-**Status**: ✅ Production Ready | **Updated**: 2025
+**Status**: ✅ Production Ready | **SASMP**: v1.3.0 | **Updated**: 2025-01

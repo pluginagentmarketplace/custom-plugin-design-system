@@ -1,6 +1,10 @@
 ---
 name: assessment-guide
 description: Comprehensive guide for skill assessment, career evaluation, learning paths, knowledge testing, and professional development. Use when assessing technical skills, planning learning journeys, or evaluating career progress.
+sasmp_version: "1.3.0"
+bonded_agent: 07-career-mentor
+bond_type: PRIMARY_BOND
+eqhm_enabled: true
 ---
 
 # Skill Assessment & Learning Paths Guide
@@ -392,3 +396,7 @@ Year 4-5: Leadership
 ```
 
 **Roadmap.sh Reference**: https://roadmap.sh
+
+---
+
+**Status**: ✅ Production Ready | **SASMP**: v1.3.0 | **Bonded Agent**: 07-career-mentor

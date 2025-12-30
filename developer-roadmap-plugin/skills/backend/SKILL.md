@@ -1,6 +1,10 @@
 ---
 name: backend-guide
 description: Complete backend development guide covering Node.js, Python, Go, Java, PHP, databases, APIs, authentication, and server architecture. Use when building server applications, APIs, or backend systems.
+sasmp_version: "1.3.0"
+bonded_agent: 02-backend-specialist
+bond_type: PRIMARY_BOND
+eqhm_enabled: true
 ---
 
 # Backend Development Guide
@@ -241,3 +245,7 @@ const verified = jwt.verify(token, SECRET);
 7. Contribute to backend open-source
 
 **Roadmap.sh Reference**: https://roadmap.sh/backend
+
+---
+
+**Status**: ✅ Production Ready | **SASMP**: v1.3.0 | **Bonded Agent**: 02-backend-specialist
