@@ -1,6 +1,10 @@
 ---
 name: data-ai-guide
 description: Comprehensive data science, machine learning, and AI guide covering Python, deep learning, NLP, LLMs, prompt engineering, and MLOps. Use when building AI models, data pipelines, or machine learning systems.
+sasmp_version: "1.3.0"
+bonded_agent: 04-data-ai-specialist
+bond_type: PRIMARY_BOND
+eqhm_enabled: true
 ---
 
 # Data Science & AI Guide
@@ -238,3 +242,7 @@ qa = RetrievalQA.from_chain_type(
 - [OpenAI API](https://platform.openai.com/)
 
 **Roadmap.sh Reference**: https://roadmap.sh/ai-engineer
+
+---
+
+**Status**: ✅ Production Ready | **SASMP**: v1.3.0 | **Bonded Agent**: 04-data-ai-specialist

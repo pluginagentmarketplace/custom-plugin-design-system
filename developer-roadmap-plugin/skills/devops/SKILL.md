@@ -1,6 +1,10 @@
 ---
 name: devops-guide
 description: Comprehensive DevOps and infrastructure guide covering Docker, Kubernetes, AWS, Terraform, CI/CD pipelines, Linux, and cloud deployment strategies. Use when setting up infrastructure, automation, or deployment systems.
+sasmp_version: "1.3.0"
+bonded_agent: 03-devops-cloud-specialist
+bond_type: PRIMARY_BOND
+eqhm_enabled: true
 ---
 
 # DevOps & Infrastructure Guide
@@ -232,3 +236,7 @@ top/htop                                    # System monitoring
 7. Master Linux administration
 
 **Roadmap.sh Reference**: https://roadmap.sh/devops
+
+---
+
+**Status**: ✅ Production Ready | **SASMP**: v1.3.0 | **Bonded Agent**: 03-devops-cloud-specialist

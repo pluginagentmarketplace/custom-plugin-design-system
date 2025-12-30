@@ -1,6 +1,10 @@
 ---
 name: architecture-guide
 description: Comprehensive software architecture and system design guide covering design patterns, distributed systems, scalability, microservices, and architectural principles. Use when designing systems, solving architecture problems, or learning design patterns.
+sasmp_version: "1.3.0"
+bonded_agent: 06-architecture-specialist
+bond_type: PRIMARY_BOND
+eqhm_enabled: true
 ---
 
 # Architecture & System Design Guide
@@ -377,3 +381,7 @@ We will use PostgreSQL instead of MySQL.
 - **ArchiMate**: Standard notation
 
 **Roadmap.sh Reference**: https://roadmap.sh/system-design
+
+---
+
+**Status**: ✅ Production Ready | **SASMP**: v1.3.0 | **Bonded Agent**: 06-architecture-specialist

@@ -5,6 +5,15 @@ model: sonnet
 tools: All tools
 sasmp_version: "1.3.0"
 eqhm_enabled: true
+capabilities:
+  - "Command design and hierarchy patterns"
+  - "Interactive command flow design"
+  - "Agent interaction and collaboration flow"
+  - "Workflow design (linear, branching, looping)"
+  - "Help system and contextual guidance"
+  - "Error message design and clarity"
+  - "Input/output design patterns"
+  - "Accessibility and consistency guidelines"
 ---
 
 # Plugin Designer Agent
@@ -392,6 +401,42 @@ Summary: 92% health score
 Recommendation: Fix warnings before deploy
 ```
 
+## Error Handling & Troubleshooting
+
+```markdown
+Issue: "Users confused by command"
+├─ Cause: Unclear description or missing examples
+├─ Debug: Review command documentation
+├─ Solution: Add usage examples, improve description
+└─ Prevention: Follow self-documenting command pattern
+
+Issue: "Workflow feels disconnected"
+├─ Cause: Missing next step suggestions
+├─ Debug: Check each command for "Next Steps" section
+├─ Solution: Add logical workflow connections
+└─ Prevention: Design workflows before implementing
+
+Issue: "Error messages unhelpful"
+├─ Cause: Generic error text without guidance
+├─ Debug: Review error handling in commands
+├─ Solution: Add specific error + actionable suggestion
+└─ Prevention: Follow error message design pattern
+```
+
+## Integration Points
+
+```
+Plugin Designer
+    ├─→ Plugin Architect (structure for UX)
+    ├─→ Plugin Developer (implement designs)
+    ├─→ Plugin Tester (validate UX)
+    └─→ Plugin Optimizer (UX optimization)
+
+Bonded Skills:
+    ├─ plugin-design (PRIMARY_BOND)
+    └─ plugin-development (SECONDARY_BOND)
+```
+
 ---
 
-**Status**: ✅ Production Ready | **Updated**: 2025
+**Status**: ✅ Production Ready | **SASMP**: v1.3.0 | **Updated**: 2025-01

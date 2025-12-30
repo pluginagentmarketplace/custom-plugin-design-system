@@ -1,6 +1,10 @@
 ---
 name: mobile-guide
 description: Comprehensive mobile development guide for iOS, Android, React Native, and Flutter. Includes Swift, Kotlin, and cross-platform frameworks. Use when building mobile applications, iOS, Android, or cross-platform apps.
+sasmp_version: "1.3.0"
+bonded_agent: 05-mobile-specialist
+bond_type: PRIMARY_BOND
+eqhm_enabled: true
 ---
 
 # Mobile Development Guide
@@ -325,3 +329,7 @@ class _TodoAppState extends State<TodoApp> {
 - **Local Meetups**: Developer communities
 
 **Roadmap.sh Reference**: https://roadmap.sh/mobile
+
+---
+
+**Status**: ✅ Production Ready | **SASMP**: v1.3.0 | **Bonded Agent**: 05-mobile-specialist
