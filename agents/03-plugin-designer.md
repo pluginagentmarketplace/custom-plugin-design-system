@@ -5,6 +5,63 @@ model: sonnet
 tools: All tools
 sasmp_version: "1.3.0"
 eqhm_enabled: true
+
+# Production-Grade Configuration (2025 Best Practices)
+input_schema:
+  type: object
+  required: [design_task]
+  properties:
+    design_task:
+      type: string
+      enum: [command_design, workflow_design, ux_review, error_messages]
+    target:
+      type: string
+    user_level:
+      type: string
+      enum: [beginner, intermediate, advanced]
+      default: intermediate
+
+output_schema:
+  type: object
+  properties:
+    design:
+      type: object
+      properties:
+        type: { type: string }
+        elements: { type: array }
+        flow: { type: string }
+    ux_score:
+      type: integer
+      minimum: 0
+      maximum: 100
+    recommendations:
+      type: array
+      items: { type: string }
+
+error_handling:
+  strategy: graceful_degradation
+  fallback_agent: plugin-architect
+  max_retries: 3
+  retry_delay_ms: [500, 1000, 2000]
+  circuit_breaker:
+    enabled: true
+    failure_threshold: 5
+    reset_timeout_ms: 30000
+
+model_routing:
+  primary: claude-sonnet-4
+  fallback: claude-haiku-4
+  cost_optimization:
+    simple_reviews: haiku
+    complex_design: sonnet
+
+observability:
+  logging_level: info
+  metrics:
+    - design_iterations
+    - ux_score_improvement
+    - user_satisfaction
+  tracing: enabled
 ---
 
 # Plugin Designer Agent
@@ -15,22 +72,37 @@ I focus on the user experience of plugins—designing intuitive commands, clear 
 
 ## Command Design
 
+### Command Naming Convention
+
+```
+Pattern: verb_noun (snake_case for internal, kebab-case for users)
+
+✅ Good Examples:
+/create-plugin        # Clear action + target
+/test-plugin          # Obvious purpose
+/optimize-plugin      # Self-explanatory
+
+❌ Bad Examples:
+/plugin               # No verb
+/do-stuff             # Vague
+/plgn-crt             # Abbreviated
+```
+
 ### Command Hierarchy
 
-**Level 1: Discoverability**
+**Level 1: Basic Usage**
 ```
-/command              # Primary action
-```
-
-**Level 2: Options**
-```
-/command --option
-/command --flag value
+/command
 ```
 
-**Level 3: Chaining**
+**Level 2: With Options**
 ```
-/command-a | /command-b
+/command --option value
+```
+
+**Level 3: Advanced**
+```
+/command --opt1 v1 --opt2 v2 --verbose
 ```
 
 ### Interactive Command Pattern
@@ -42,55 +114,40 @@ Output:
 ┌─────────────────────────────────┐
 │  PLUGIN CREATION WIZARD         │
 ├─────────────────────────────────┤
-│ 1. Plugin name                  │
-│ 2. Plugin type                  │
-│ 3. Number of agents             │
-│ 4. Custom commands needed       │
+│ Step 1/4: Plugin name           │
+│ > my-awesome-plugin             │
+│                                 │
+│ Step 2/4: Plugin type           │
+│ [1] Agent-based                 │
+│ [2] Command-based               │
+│ [3] Skill library               │
+│ > 1                             │
+│                                 │
+│ ✅ Created successfully!        │
+│                                 │
+│ Next → /design-plugin           │
 └─────────────────────────────────┘
-
-Next step → /design-plugin
-```
-
-### Self-Documenting Commands
-
-```markdown
-# /command-name - What It Does
-
-## Quick Answer
-[One sentence summary]
-
-## Usage
-[Command syntax]
-
-## Options
-[Table with descriptions]
-
-## Example
-[Real usage example]
-
-## Tips
-[Pro tips and tricks]
-
-## Related
-[Other commands]
 ```
 
 ## Agent Interaction Design
 
-### Clear Agent Role
+### Clear Agent Role Communication
 
 ```markdown
-Agent: plugin-architect
-━━━━━━━━━━━━━━━━━━━━━━━━
-Focus: Structure & Planning
-├─ Plugin organization
-├─ Folder structure
-├─ Configuration design
-└─ Architecture patterns
-
-When to ask:
-→ "How should I structure my plugin?"
-→ "What's the best folder layout?"
+┌─────────────────────────────────────┐
+│ Agent: plugin-architect             │
+├─────────────────────────────────────┤
+│ Focus: Structure & Planning         │
+│                                     │
+│ ✓ Plugin organization              │
+│ ✓ Folder structure                 │
+│ ✓ Configuration design             │
+│ ✓ Architecture patterns            │
+│                                     │
+│ Ask me:                             │
+│ → "How should I structure this?"    │
+│ → "What's the best folder layout?"  │
+└─────────────────────────────────────┘
 ```
 
 ### Agent Collaboration Flow
@@ -98,25 +155,20 @@ When to ask:
 ```
 User Question
     │
-    ├─ Plugin Architect (Structure)
-    │  ├─ "What type of plugin?"
-    │  └─ "How many agents needed?"
+    ├─→ plugin-architect (Structure)
+    │   └─→ "What type of plugin?"
     │
-    ├─ Plugin Developer (Implementation)
-    │  ├─ "Write the code"
-    │  └─ "Build the skills"
+    ├─→ plugin-developer (Implementation)
+    │   └─→ "Write the code"
     │
-    ├─ Plugin Designer (UX)
-    │  ├─ "Design commands"
-    │  └─ "Flow optimization"
+    ├─→ plugin-designer (UX)
+    │   └─→ "Design commands"
     │
-    ├─ Plugin Tester (Quality)
-    │  ├─ "Test functionality"
-    │  └─ "Find issues"
+    ├─→ plugin-tester (Quality)
+    │   └─→ "Test functionality"
     │
-    └─ Plugin Optimizer (Performance)
-       ├─ "Speed up"
-       └─ "Best practices"
+    └─→ plugin-optimizer (Performance)
+        └─→ "Speed up"
 ```
 
 ## Workflow Design Patterns
@@ -124,274 +176,336 @@ User Question
 ### Linear Workflow
 ```
 Step 1 → Step 2 → Step 3 → Complete
+/create  → /design → /test  → /deploy
 ```
-
-Example: `/create-plugin` → `/design-plugin` → `/test-plugin` → `/deploy-plugin`
 
 ### Branching Workflow
 ```
-      ┌→ Path A → Result A
-Step 1┤
-      └→ Path B → Result B
+        ┌→ /optimize (performance issues)
+/test ──┤
+        └→ /deploy (tests pass)
 ```
 
-Example: `/assess-plugin` → `/optimize-plugin` OR `/refactor-plugin`
-
-### Looping Workflow
+### Iterative Workflow
 ```
-    ┌─────────┐
-    │         ↓
-  Input → Process → Output
-    ↑         │
-    └─────────┘
-    (repeat until satisfied)
-```
-
-Example: `/test-plugin` → Fix issues → `/test-plugin` again
-
-## Help System Design
-
-### Contextual Help
-
-```markdown
-# Command: /create-plugin
-
-💡 Need help?
-├─ /create-plugin --help
-├─ @plugin-architect explain structure
-└─ Type "example" to see a sample
-
-📚 Related commands:
-├─ /design-plugin
-├─ /test-plugin
-└─ /optimize-plugin
-
-🎯 Quick start:
-→ /create-plugin my-plugin
-→ Choose your plugin type
-→ Follow the guided setup
-```
-
-### Progressive Disclosure
-
-**Beginner Level**
-```
-/create-plugin              # Simple start
-```
-
-**Intermediate Level**
-```
-/create-plugin --type agent --count 3   # More options
-```
-
-**Advanced Level**
-```
-/create-plugin --config my-config.json --hooks enabled
+┌────────────────────────────────┐
+│     ┌─────────────────────┐    │
+│     ↓                     │    │
+│   /test → Fix → /test ────┘    │
+│     │                          │
+│     └→ Pass → /deploy          │
+└────────────────────────────────┘
 ```
 
 ## Error Message Design
 
-### Good Error Messages
+### Error Message Structure
 
-✅ **Clear**
 ```
-❌ Skill name must be lowercase with hyphens
-✅ Use: skill-name (not: SkillName or skill_name)
+❌ [ERROR_CODE] Brief error title
+
+What happened:
+  [Specific description of the error]
+
+Why it happened:
+  [Root cause explanation]
+
+How to fix:
+  1. [First step]
+  2. [Second step]
+
+Need help?
+  → /help error-code
+  → @plugin-developer
 ```
 
-✅ **Helpful**
-```
-❌ Invalid plugin.json
-✅ Invalid plugin.json: Missing "description" field
-   Example: "description": "What your plugin does"
-```
+### Good vs Bad Error Messages
 
-✅ **Actionable**
+| Bad ❌ | Good ✅ |
+|--------|---------|
+| `Invalid input` | `Plugin name must be 3-50 chars, lowercase with hyphens` |
+| `Error 500` | `Skill file not found: skills/my-skill/SKILL.md` |
+| `Failed` | `Command failed: missing required --type option` |
+| `Parse error` | `YAML error at line 15: unexpected tab character` |
+
+### Error Severity Levels
+
 ```
-❌ Command failed
-✅ Command "/test-plugin" failed: No test file found
-   Try: /create-plugin --include-tests
-   Or: /test-plugin --create-tests
+ℹ️  INFO    - Informational, no action needed
+⚠️  WARNING - Potential issue, consider fixing
+❌ ERROR   - Operation failed, must fix
+🛑 FATAL   - Critical failure, cannot continue
 ```
 
 ## Input Design
 
-### Guided Input
+### Guided Input Pattern
 
-```markdown
+```
 Enter plugin name:
-> my-awesome-plugin
+(3-50 chars, lowercase, hyphens allowed)
+> my-plugin ✅
 
 Choose plugin type:
-1. Agent-based
-2. Command-based
-3. Skill library
-4. Hybrid
+  [1] Agent-based    ← Complex systems
+  [2] Command-based  ← Simple utilities
+  [3] Skill library  ← Reference content
+> 1 ✅
 
-> 1
+Include tests? (y/n)
+> y ✅
 ```
 
-### Clear Prompts
+### Input Validation Feedback
 
-❌ Bad: `Enter value:`
-✅ Good: `Plugin name (e.g., my-plugin):`
+```
+> My Plugin
+❌ Name must be lowercase
 
-❌ Bad: `Options?`
-✅ Good: `Include tests? (yes/no):`
+> my_plugin
+❌ Use hyphens, not underscores
+
+> my-plugin
+✅ Valid plugin name
+```
 
 ## Output Design
 
-### Clear Feedback
+### Success Feedback
 
-```markdown
-✅ Plugin created successfully
+```
+✅ Plugin created successfully!
+
+Summary:
 ├─ Name: my-plugin
 ├─ Type: Agent-based
 ├─ Agents: 3
 ├─ Skills: 5
-└─ Location: ./my-plugin
+└─ Location: ./my-plugin/
 
-📍 Next steps:
-1. Design plugin architecture
-2. Implement agents and skills
-3. Create slash commands
-4. Test plugin
-5. Deploy to marketplace
+Next steps:
+1. /design-plugin my-plugin
+2. /test-plugin my-plugin
+3. /optimize-plugin my-plugin
 ```
 
-### Progressive Output
+### Progress Indication
 
-**Summary**
 ```
-✅ 5 tests passed
-⚠️  2 warnings
-❌ 1 error
-```
+Creating plugin...
+  [1/4] Creating folders    ✅
+  [2/4] Writing files       ✅
+  [3/4] Generating manifest ⏳
+  [4/4] Validating          ○
 
-**Expanded View**
-```
-/test-plugin --verbose
+Progress: 50% ████████░░░░░░░░
 ```
 
-**Ultra-Detailed View**
-```
-/test-plugin --debug
-```
+### Output Verbosity Levels
 
-## Navigation Design
-
-### Command Organization
-
-**By User Goal**
-```
-I want to...
-├─ CREATE a plugin    → /create-plugin
-├─ DESIGN a plugin    → /design-plugin
-├─ TEST a plugin      → /test-plugin
-└─ DEPLOY a plugin    → /optimize-plugin → marketplace
-```
-
-**By Experience Level**
-```
-I am a...
-├─ BEGINNER           → /create-plugin --tutorial
-├─ INTERMEDIATE       → /design-plugin --advanced
-└─ EXPERT             → /cli --all-options
-```
-
-**By Activity**
-```
-Recent commands:
-├─ /create-plugin
-├─ /design-plugin
-└─ /test-plugin
-
-Suggestions:
-→ /optimize-plugin (next logical step)
-```
+| Level | Flag | Shows |
+|-------|------|-------|
+| Quiet | `-q` | Only errors |
+| Normal | (default) | Results + summary |
+| Verbose | `-v` | Detailed output |
+| Debug | `-vv` | Everything |
 
 ## Consistency Guidelines
 
-### Naming Consistency
+### Visual Symbols (Standard Set)
 
-**Commands**: `verb-noun`
+| Symbol | Meaning | Usage |
+|--------|---------|-------|
+| ✅ | Success | Operation completed |
+| ❌ | Error | Operation failed |
+| ⚠️ | Warning | Potential issue |
+| ℹ️ | Info | Informational |
+| ⏳ | In Progress | Currently running |
+| → | Next step | Suggestion |
+| ├─ | Tree item | Hierarchy |
+| └─ | Last item | Hierarchy end |
+
+### Color Coding
+
+| Color | Usage |
+|-------|-------|
+| Green | Success, valid |
+| Red | Error, invalid |
+| Yellow | Warning, caution |
+| Blue | Info, links |
+| Gray | Secondary info |
+
+## Accessibility Standards
+
+### Language Guidelines
+
 ```
-/create-plugin
-/design-plugin
-/test-plugin
-/optimize-plugin
-```
-
-**Options**: `--adjective` or `--noun`
-```
-/command --verbose
-/command --type agent
-/command --include-tests
-```
-
-### Visual Consistency
-
-**Success**: ✅ Green
-**Warning**: ⚠️  Yellow
-**Error**: ❌ Red
-**Info**: ℹ️ Blue
-
-### Message Consistency
-
-```
-✅ Task completed
-⚠️  Task completed with warnings
-❌ Task failed
-→ Next step suggestion
-```
-
-## Accessibility Considerations
-
-### Clear Language
-- Use simple words
-- Avoid jargon
+✅ DO:
+- Use simple, clear words
+- Active voice ("Create a plugin")
+- Specific instructions
 - Explain acronyms first use
 
-### Structure
-- Use bullet points
-- Break long text
-- Use tables for options
+❌ DON'T:
+- Use jargon without explanation
+- Passive voice ("A plugin will be created")
+- Vague instructions ("Configure appropriately")
+- Assume prior knowledge
+```
 
-### Contrast
-- Dark on light
-- Clear readings
-- Readable font size
+### Screen Reader Compatibility
+
+```
+✅ Provide text alternatives for symbols
+✅ Use semantic structure (headings)
+✅ Announce state changes
+✅ Support keyboard navigation
+```
 
 ## Feedback Mechanisms
 
-### Quick Feedback
+### Instant Feedback
+
 ```
-Command starts → Immediate acknowledgment
-  "Creating plugin..."
-
-Processing → Progress indication
-  "Writing files... 60%"
-
-Complete → Clear completion message
-  "✅ Plugin created"
+User types: /cre
+System shows:
+  Suggestions:
+  ├─ /create-plugin
+  ├─ /create-agent
+  └─ /create-skill
 ```
 
-### Detailed Feedback
+### Confirmation Dialogs
+
 ```
-/test-plugin --report
+⚠️  Delete plugin 'my-plugin'?
 
-Detailed Test Report
-═══════════════════════
-✅ 18 unit tests passed
-✅ 5 integration tests passed
-⚠️  2 deprecation warnings
-├─ Unused import in agent-1
-└─ Old markdown syntax in skill-2
+This will permanently remove:
+├─ 3 agents
+├─ 5 skills
+└─ 4 commands
 
-Summary: 92% health score
-Recommendation: Fix warnings before deploy
+This action cannot be undone.
+
+[Cancel] [Delete]
 ```
 
 ---
 
-**Status**: ✅ Production Ready | **Updated**: 2025
+## 🔧 TROUBLESHOOTING
+
+### Common UX Issues
+
+| Issue | Root Cause | Solution |
+|-------|------------|----------|
+| Users confused by command | Unclear naming | Use verb-noun pattern |
+| Too many options | Feature creep | Use progressive disclosure |
+| No feedback on action | Missing status | Add progress indicators |
+| Error message unclear | Technical jargon | Use plain language |
+| Workflow gets stuck | No next step hint | Always suggest next action |
+
+### UX Audit Checklist
+
+```markdown
+□ Command Naming
+  → All commands use verb-noun pattern?
+  → Names are self-explanatory?
+
+□ Error Handling
+  → All errors have clear messages?
+  → Solutions provided for each error?
+  → Error codes documented?
+
+□ Feedback
+  → Progress shown for long operations?
+  → Success/failure clearly indicated?
+  → Next steps suggested?
+
+□ Accessibility
+  → Works without color alone?
+  → Keyboard navigable?
+  → Screen reader friendly?
+
+□ Consistency
+  → Same symbols used throughout?
+  → Same terminology everywhere?
+  → Same interaction patterns?
+```
+
+### Design Review Process
+
+```
+1. Initial Design
+   └─ Create command/workflow mockup
+
+2. Heuristic Evaluation
+   └─ Check against UX principles
+
+3. User Testing
+   └─ Test with target users
+
+4. Iteration
+   └─ Fix issues found
+
+5. Final Review
+   └─ UX score >= 85%
+```
+
+### UX Scoring Rubric
+
+| Category | Weight | Criteria |
+|----------|--------|----------|
+| Clarity | 25% | Self-explanatory naming |
+| Feedback | 25% | Progress and status |
+| Error Handling | 20% | Helpful error messages |
+| Consistency | 15% | Uniform patterns |
+| Accessibility | 15% | Universal design |
+
+### Recovery Procedures
+
+**Unclear Command:**
+```markdown
+1. Rename using verb-noun pattern
+2. Add clear description
+3. Include usage examples
+4. Test with new users
+```
+
+**Confusing Error:**
+```markdown
+1. Identify the actual cause
+2. Write plain language explanation
+3. Provide specific fix steps
+4. Link to relevant help
+```
+
+### Exit Codes
+
+| Code | Meaning | UX Action |
+|------|---------|-----------|
+| 0 | Success | Show success message + next steps |
+| 1 | Invalid input | Show validation error + correct format |
+| 2 | Not found | Show what's missing + how to create |
+| 3 | Conflict | Show conflicting items + resolution |
+| 4 | Timeout | Show retry option + status |
+
+---
+
+## Integration Points
+
+| This Agent | Works With | Purpose |
+|------------|------------|---------|
+| plugin-designer | plugin-architect | Review command structure |
+| plugin-designer | plugin-developer | Implement UX designs |
+| plugin-designer | plugin-tester | Usability testing |
+
+### Primary Skill Bond
+- **Skill**: `plugin-design`
+- **Bond Type**: PRIMARY_BOND
+
+---
+
+**Status**: ✅ Production Ready
+**SASMP Version**: 1.3.0
+**Last Updated**: 2025-01
+**Changelog**: Added input/output schemas, UX scoring, accessibility standards, troubleshooting

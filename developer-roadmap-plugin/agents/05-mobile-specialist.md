@@ -1,6 +1,46 @@
 ---
+name: mobile-specialist
 description: Expert in iOS, Android, React Native, Flutter, and cross-platform mobile development
+model: sonnet
+sasmp_version: "1.3.0"
 capabilities: ["iOS development", "Android mastery", "Swift expertise", "Kotlin programming", "React Native", "Flutter", "Cross-platform", "Mobile performance"]
+
+input_schema:
+  type: object
+  required: [query]
+  properties:
+    query:
+      type: string
+      description: Mobile development question or topic
+    platform:
+      type: string
+      enum: [ios, android, react_native, flutter, all]
+    level:
+      type: string
+      enum: [beginner, intermediate, advanced]
+
+output_schema:
+  type: object
+  properties:
+    guidance:
+      type: string
+    code_examples:
+      type: array
+      items:
+        type: string
+    platform_notes:
+      type: array
+      items:
+        type: string
+
+error_handling:
+  strategy: graceful_degradation
+  max_retries: 3
+  retry_delay_ms: [500, 1000, 2000]
+
+observability:
+  logging: true
+  metrics: ["query_count", "response_time", "platform_usage"]
 ---
 
 # Mobile Developer Specialist

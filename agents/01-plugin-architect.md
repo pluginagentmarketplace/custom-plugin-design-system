@@ -5,6 +5,63 @@ model: sonnet
 tools: All tools
 sasmp_version: "1.3.0"
 eqhm_enabled: true
+
+# Production-Grade Configuration (2025 Best Practices)
+input_schema:
+  type: object
+  required: [request_type]
+  properties:
+    request_type:
+      type: string
+      enum: [design, review, optimize, troubleshoot]
+    plugin_name:
+      type: string
+      pattern: "^[a-z][a-z0-9-]{2,49}$"
+    complexity:
+      type: string
+      enum: [minimal, standard, enterprise]
+      default: standard
+
+output_schema:
+  type: object
+  properties:
+    architecture:
+      type: object
+      properties:
+        structure: { type: string }
+        agents_count: { type: integer, minimum: 1, maximum: 10 }
+        skills_count: { type: integer, minimum: 1, maximum: 30 }
+    recommendations:
+      type: array
+      items: { type: string }
+    next_steps:
+      type: array
+      items: { type: string }
+
+error_handling:
+  strategy: graceful_degradation
+  fallback_agent: null
+  max_retries: 3
+  retry_delay_ms: [500, 1000, 2000]  # Exponential backoff
+  circuit_breaker:
+    enabled: true
+    failure_threshold: 5
+    reset_timeout_ms: 30000
+
+model_routing:
+  primary: claude-sonnet-4
+  fallback: claude-haiku-4
+  cost_optimization:
+    simple_queries: haiku
+    complex_analysis: sonnet
+
+observability:
+  logging_level: info
+  metrics:
+    - request_latency
+    - token_usage
+    - error_rate
+  tracing: enabled
 ---
 
 # Plugin Architect Agent
@@ -111,15 +168,31 @@ custom-plugin/
 - **Agent 3**: Advanced topics
 - **Agent 4**: Optimization/Performance
 
-### YAML Frontmatter Requirements
+### YAML Frontmatter Requirements (2025 Standard)
 
 ```yaml
 ---
-description: "Clear description (max 1024 chars). Explain what the agent does and when to use it."
-capabilities:
-  - "Capability 1"
-  - "Capability 2"
-  - "Capability 3"
+name: agent-id
+description: "Clear description (max 1024 chars)"
+model: sonnet
+tools: All tools
+sasmp_version: "1.3.0"
+
+# Required for production
+input_schema:
+  type: object
+  properties:
+    # Define expected inputs
+
+output_schema:
+  type: object
+  properties:
+    # Define expected outputs
+
+error_handling:
+  strategy: graceful_degradation
+  max_retries: 3
+  retry_delay_ms: [500, 1000, 2000]
 ---
 ```
 
@@ -131,6 +204,9 @@ capabilities:
 ---
 name: skill-id          # lowercase, hyphens, max 64 chars
 description: "Full description (max 1024 chars)"
+sasmp_version: "1.3.0"
+bonded_agent: agent-id
+bond_type: PRIMARY_BOND
 ---
 
 # Skill Name
@@ -144,27 +220,9 @@ description: "Full description (max 1024 chars)"
 ## Advanced Topics
 [Expert-level content]
 
-## Real Projects
-[Practical applications]
+## Troubleshooting
+[Common issues and solutions]
 ```
-
-## Command Architecture
-
-### Command Patterns
-
-```
-/command                    # Basic command
-/command [option]          # With option
-/command --flag value      # With flags
-/command --flag1 v1 --flag2 v2  # Multiple flags
-```
-
-### Command Response Types
-
-1. **Interactive** - Presents options, requests input
-2. **Informative** - Displays curated information
-3. **Actionable** - Provides next steps and code
-4. **Analytical** - Reviews and provides feedback
 
 ## Design Patterns
 
@@ -182,17 +240,14 @@ Skills (Reference & Knowledge)
 Hooks (Automation)
 ```
 
-### Agent Relationships
+### Agent Relationships (Orchestrator Pattern)
 ```
-Agent A (Primary)
-    ↓
-Agent B (Supporting)
-    ↓
-Agent C (Specialized)
+Orchestrator Agent
+    ├── Subagent A (Specialized Task)
+    ├── Subagent B (Specialized Task)
+    └── Subagent C (Specialized Task)
 
-[Shared Skills]
-- skill-common-1
-- skill-common-2
+[Shared Skills Pool]
 ```
 
 ## File Naming Conventions
@@ -212,6 +267,8 @@ Agent C (Specialized)
 - Document command parameters
 - Version your plugin semantically
 - Include comprehensive README
+- Implement error handling
+- Add observability hooks
 
 ### Don'ts ❌
 - Don't put unrelated functionality in one agent
@@ -219,6 +276,8 @@ Agent C (Specialized)
 - Don't skip YAML frontmatter
 - Don't use spaces in file names
 - Don't nest agent files
+- Don't ignore error cases
+- Don't skip input validation
 
 ## Plugin Lifecycle
 
@@ -226,31 +285,33 @@ Agent C (Specialized)
 1. Design (Architecture)
    ├─ Identify domains
    ├─ Plan agents
+   ├─ Define input/output schemas
    └─ Design commands
 
 2. Implementation (Development)
    ├─ Create manifest
-   ├─ Write agents
-   ├─ Create skills
-   └─ Build commands
+   ├─ Write agents with error handling
+   ├─ Create skills with troubleshooting
+   └─ Build commands with validation
 
 3. Integration (Testing)
    ├─ Test commands
    ├─ Validate skills
    ├─ Check hooks
+   ├─ Verify error handling
    └─ User acceptance
 
 4. Optimization (Performance)
    ├─ Measure response time
    ├─ Optimize content
-   ├─ Enhance UX
+   ├─ Tune retry logic
    └─ Refine error handling
 
 5. Deployment (Release)
    ├─ Version bump
    ├─ Document changes
    ├─ Submit to marketplace
-   └─ Monitor usage
+   └─ Monitor metrics
 ```
 
 ## Scalability Considerations
@@ -265,11 +326,95 @@ Agent C (Specialized)
 - Limit: 20-30 skills per plugin
 - Group related skills
 
-### Feature Growth
-- Add new commands for new workflows
-- Create hooks for automation
-- Use scripts for complex operations
+---
+
+## 🔧 TROUBLESHOOTING
+
+### Common Failure Modes
+
+| Symptom | Root Cause | Solution |
+|---------|------------|----------|
+| Agent not found | Missing manifest entry | Add agent to plugin.json `agents` array |
+| Skill won't load | Invalid YAML frontmatter | Validate YAML syntax, check indentation |
+| Command fails silently | Missing error handling | Add try-catch with user feedback |
+| Slow response time | Content too large | Trim to 250-400 lines per agent |
+| Circular dependency | Agents referencing each other | Use orchestrator pattern instead |
+
+### Debug Checklist
+
+```markdown
+□ Step 1: Validate plugin.json syntax
+  → Run: JSON.parse(fs.readFileSync('plugin.json'))
+
+□ Step 2: Check file references
+  → All agents[].file paths exist?
+  → All skills[].file paths exist?
+  → All commands[].file paths exist?
+
+□ Step 3: Validate YAML frontmatter
+  → Each agent has valid ---...--- block?
+  → Required fields present (name, description)?
+
+□ Step 4: Check error handling config
+  → max_retries defined?
+  → fallback strategy set?
+
+□ Step 5: Test in isolation
+  → Load single agent
+  → Verify response format
+```
+
+### Recovery Procedures
+
+**Manifest Corruption:**
+```bash
+# Backup current state
+cp plugin.json plugin.json.bak
+
+# Validate JSON
+npx jsonlint plugin.json
+
+# Regenerate if needed
+/create-plugin --regenerate-manifest
+```
+
+**Agent Load Failure:**
+```bash
+# Check YAML syntax
+npx yaml-lint agents/01-plugin-architect.md
+
+# Verify frontmatter
+head -50 agents/01-plugin-architect.md
+```
+
+### Exit Codes
+
+| Code | Meaning | Action |
+|------|---------|--------|
+| 0 | Success | Continue |
+| 1 | Invalid input | Check input schema |
+| 2 | File not found | Verify file paths |
+| 3 | YAML parse error | Fix frontmatter |
+| 4 | Dependency missing | Install dependencies |
+| 5 | Timeout | Increase timeout or simplify |
 
 ---
 
-**Status**: ✅ Production Ready | **Updated**: 2025
+## Integration Points
+
+| This Agent | Works With | Purpose |
+|------------|------------|---------|
+| plugin-architect | plugin-developer | Hand off architecture to implementation |
+| plugin-architect | plugin-designer | UX review of command structure |
+| plugin-architect | plugin-tester | Architecture validation |
+
+### Primary Skill Bond
+- **Skill**: `plugin-architecture`
+- **Bond Type**: PRIMARY_BOND
+
+---
+
+**Status**: ✅ Production Ready
+**SASMP Version**: 1.3.0
+**Last Updated**: 2025-01
+**Changelog**: Added input/output schemas, error handling, troubleshooting section

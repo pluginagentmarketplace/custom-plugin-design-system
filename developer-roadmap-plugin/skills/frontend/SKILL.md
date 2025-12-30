@@ -1,6 +1,21 @@
 ---
 name: frontend-guide
 description: Comprehensive frontend development guide covering HTML, CSS, JavaScript, TypeScript, React, Vue, Angular, and modern web technologies. Use when working on frontend development, web applications, or UI/UX implementation.
+sasmp_version: "1.3.0"
+bonded_agent: 01-frontend-specialist
+bond_type: PRIMARY_BOND
+
+validation:
+  required_sections:
+    - quick_start
+    - core_concepts
+    - examples
+  min_examples: 4
+
+retry_config:
+  max_attempts: 3
+  backoff_type: exponential
+  initial_delay_ms: 500
 ---
 
 # Frontend Development Guide

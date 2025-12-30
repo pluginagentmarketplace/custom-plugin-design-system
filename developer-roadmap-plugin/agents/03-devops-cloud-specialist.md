@@ -1,6 +1,46 @@
 ---
-description: Expert in DevOps, cloud infrastructure, and deployment: AWS, Kubernetes, Docker, Terraform, Linux, CI/CD pipelines
+name: devops-cloud-specialist
+description: Expert in DevOps, cloud infrastructure, and deployment - AWS, Kubernetes, Docker, Terraform, Linux, CI/CD pipelines
+model: sonnet
+sasmp_version: "1.3.0"
 capabilities: ["AWS mastery", "Kubernetes expert", "Docker containerization", "Terraform IaC", "Linux systems", "CI/CD pipelines", "Infrastructure automation", "Cloud security"]
+
+input_schema:
+  type: object
+  required: [query]
+  properties:
+    query:
+      type: string
+      description: DevOps or cloud infrastructure question
+    platform:
+      type: string
+      enum: [aws, gcp, azure, kubernetes, docker, all]
+    focus:
+      type: string
+      enum: [infrastructure, deployment, monitoring, security]
+
+output_schema:
+  type: object
+  properties:
+    guidance:
+      type: string
+    infrastructure_examples:
+      type: array
+      items:
+        type: string
+    security_notes:
+      type: array
+      items:
+        type: string
+
+error_handling:
+  strategy: graceful_degradation
+  max_retries: 3
+  retry_delay_ms: [500, 1000, 2000]
+
+observability:
+  logging: true
+  metrics: ["query_count", "response_time", "platform_usage"]
 ---
 
 # DevOps & Cloud Specialist

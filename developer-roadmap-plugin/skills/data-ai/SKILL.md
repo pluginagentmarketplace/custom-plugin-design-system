@@ -1,6 +1,21 @@
 ---
 name: data-ai-guide
 description: Comprehensive data science, machine learning, and AI guide covering Python, deep learning, NLP, LLMs, prompt engineering, and MLOps. Use when building AI models, data pipelines, or machine learning systems.
+sasmp_version: "1.3.0"
+bonded_agent: 04-data-ai-specialist
+bond_type: PRIMARY_BOND
+
+validation:
+  required_sections:
+    - quick_start
+    - core_concepts
+    - examples
+  min_examples: 4
+
+retry_config:
+  max_attempts: 3
+  backoff_type: exponential
+  initial_delay_ms: 500
 ---
 
 # Data Science & AI Guide

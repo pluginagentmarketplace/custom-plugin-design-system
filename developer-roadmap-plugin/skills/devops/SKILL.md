@@ -1,6 +1,21 @@
 ---
 name: devops-guide
 description: Comprehensive DevOps and infrastructure guide covering Docker, Kubernetes, AWS, Terraform, CI/CD pipelines, Linux, and cloud deployment strategies. Use when setting up infrastructure, automation, or deployment systems.
+sasmp_version: "1.3.0"
+bonded_agent: 03-devops-cloud-specialist
+bond_type: PRIMARY_BOND
+
+validation:
+  required_sections:
+    - quick_start
+    - core_concepts
+    - examples
+  min_examples: 4
+
+retry_config:
+  max_attempts: 3
+  backoff_type: exponential
+  initial_delay_ms: 500
 ---
 
 # DevOps & Infrastructure Guide

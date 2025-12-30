@@ -2,15 +2,28 @@
 name: plugin-design
 description: Master plugin user experience design, command workflows, and interaction patterns. Create intuitive, user-friendly plugin interfaces.
 sasmp_version: "1.3.0"
-bonded_agent: 01-plugin-architect
+bonded_agent: 03-plugin-designer
 bond_type: PRIMARY_BOND
+
+# Production-Grade Configuration
+validation:
+  required_sections:
+    - quick_start
+    - core_concepts
+    - troubleshooting
+  min_examples: 4
+
+retry_config:
+  max_attempts: 3
+  backoff_type: exponential
+  initial_delay_ms: 500
 ---
 
 # Plugin Design
 
 ## Quick Start
 
-Design commands users will love:
+Design user-friendly commands:
 
 ```markdown
 # /create-plugin - Create new plugin
@@ -19,302 +32,241 @@ Design commands users will love:
 Creates a new plugin with guided setup.
 
 ## Usage
-```
-/create-plugin [name] [--type agent|command|skill]
-```
+/create-plugin [name] [--type agent|command]
 
 ## Example
-```
 $ /create-plugin my-plugin --type agent
-Creating... ✅
+✅ Plugin created!
 Next: /design-plugin my-plugin
 ```
-```
 
-## Command Design Principles
+## Core Concepts
 
-### Clear & Discoverable
+### Command Naming Convention
 
-```
-✅ /create-plugin          Clear action
-✅ /design-plugin          Obvious purpose
-✅ /test-plugin            Self-explanatory
-✅ /optimize-plugin        What it does
-```
+| Pattern | Example | Why |
+|---------|---------|-----|
+| verb-noun | `/create-plugin` | Clear action |
+| consistent | `/test-plugin` | Predictable |
+| descriptive | `/optimize-plugin` | Self-explanatory |
 
-### Consistent Naming
-
-```
-Verb-noun pattern:
-├─ /create-X
-├─ /design-X
-├─ /test-X
-└─ /optimize-X
-```
-
-## User Experience Patterns
+❌ Bad: `/plugin`, `/do-stuff`, `/plgn-crt`
+✅ Good: `/create-plugin`, `/test-plugin`
 
 ### Interactive Workflow
 
 ```
-User Input:
 /create-plugin
 
-System Response:
-  1. What's your plugin name?
-     > my-plugin
-
-  2. Plugin type?
-     [1] Agent-based
-     [2] Command-based
-     [3] Skill library
-     > 1
-
-  3. Number of agents?
-     > 3
-
-Output:
-✅ Plugin created
-Next: /design-plugin
+┌────────────────────────────────┐
+│ PLUGIN CREATION WIZARD         │
+├────────────────────────────────┤
+│ Step 1/3: Plugin name          │
+│ > my-plugin ✅                 │
+│                                │
+│ Step 2/3: Plugin type          │
+│ [1] Agent-based                │
+│ [2] Command-based              │
+│ > 1 ✅                         │
+│                                │
+│ ✅ Created!                    │
+│ Next → /design-plugin          │
+└────────────────────────────────┘
 ```
+
+### Error Message Design
+
+**Structure:**
+```
+❌ [ERROR_CODE] Brief title
+
+What happened:
+  [Description]
+
+How to fix:
+  1. [Step 1]
+  2. [Step 2]
+
+Help: /help error-code
+```
+
+**Good vs Bad:**
+
+| Bad ❌ | Good ✅ |
+|--------|---------|
+| `Invalid input` | `Name must be 3-50 chars, lowercase` |
+| `Error 500` | `File not found: skills/my-skill/SKILL.md` |
+| `Failed` | `Missing --type option` |
+
+### Visual Consistency
+
+| Symbol | Meaning | Usage |
+|--------|---------|-------|
+| ✅ | Success | Completed |
+| ❌ | Error | Failed |
+| ⚠️ | Warning | Caution |
+| ℹ️ | Info | Note |
+| → | Next | Suggestion |
+
+### Feedback Patterns
+
+**Progress:**
+```
+Creating plugin...
+  [1/4] Creating folders    ✅
+  [2/4] Writing files       ✅
+  [3/4] Validating          ⏳
+  [4/4] Complete            ○
+```
+
+**Success:**
+```
+✅ Plugin created!
+
+Summary:
+├─ Name: my-plugin
+├─ Type: Agent-based
+└─ Location: ./my-plugin/
+
+Next: /design-plugin my-plugin
+```
+
+## Advanced Topics
 
 ### Progressive Disclosure
 
-```
-Beginner:
-/create-plugin my-plugin
-  (simple, guided)
+| Level | Example | Users |
+|-------|---------|-------|
+| Basic | `/create-plugin` | Beginners |
+| Options | `/create-plugin --type agent` | Intermediate |
+| Full | `/create-plugin --config cfg.json` | Advanced |
 
-Intermediate:
-/create-plugin my-plugin --type agent --agents 3
-  (more options)
-
-Advanced:
-/create-plugin --config config.json --skip-validation
-  (all options)
-```
-
-## Error Message Design
-
-### User-Friendly Errors
-
-❌ Bad: `Invalid input`
-✅ Good: `Plugin name must be 3-50 characters, lowercase, hyphens only`
-
-❌ Bad: `Error 500`
-✅ Good: `Plugin creation failed: skill-one not found in agents/`
-
-❌ Bad: `Fatal error`
-✅ Good: `Missing required field 'description' in plugin.json`
-
-## Interface Patterns
-
-### Success Feedback
+### Accessibility Standards
 
 ```
-✅ Task completed
-├─ What was done
-├─ Where to find it
-└─ What's next
+✅ DO:
+- Simple, clear words
+- Active voice
+- Specific instructions
+- Explain acronyms
+
+❌ DON'T:
+- Jargon without explanation
+- Passive voice
+- Vague instructions
 ```
 
-### Warnings
+### Workflow Patterns
 
-```
-⚠️  Warning: Using old syntax
-├─ Recommendation: Update to new syntax
-└─ Link: /help/migration-guide
-```
-
-### Errors
-
-```
-❌ Error: Manifest invalid
-├─ Issue: Missing "author" field
-├─ Fix: Add "author": "Your Name"
-└─ Help: /help/plugin-json
-```
-
-## Consistency Standards
-
-### Visual Hierarchy
-
-```
-✅ Success (green)
-⚠️  Warning (yellow)
-❌ Error (red)
-ℹ️  Info (blue)
-→ Action (arrow)
-```
-
-### Message Format
-
-```
-[Icon] [Brief message]
-├─ [Detail 1]
-├─ [Detail 2]
-└─ [Action or suggestion]
-```
-
-## Navigation Design
-
-### Command Discovery
-
-```
-Help:
-├─ /help                 Show all commands
-├─ /help /create-plugin  Help for specific command
-└─ /help --agents        List all agents
-
-Related:
-├─ Run: /create-plugin
-├─ Then: /design-plugin
-└─ Then: /test-plugin
-```
-
-### Intelligent Suggestions
-
-```
-After /create-plugin:
-→ Suggestion: Run /design-plugin next
-  (natural workflow progression)
-
-After /test-plugin:
-→ Suggestion: Run /optimize-plugin
-  (next logical step)
-```
-
-## Accessibility Design
-
-### Clear Language
-
-```
-✅ Simple words
-✅ Short sentences
-✅ Active voice
-✅ No jargon
-
-❌ "Facilitate optimization"
-✅ "Make faster"
-```
-
-### Visual Clarity
-
-```
-✅ Good contrast
-✅ Large text
-✅ Clear structure
-✅ Readable font
-```
-
-### Keyboard Navigation
-
-```
-✅ All commands accessible via keyboard
-✅ No mouse required
-✅ Clear keyboard shortcuts
-```
-
-## Feedback Mechanisms
-
-### Immediate Feedback
-
-```
-User types: /create
-System shows: Available commands starting with 'create'
-  ├─ /create-plugin
-  ├─ /create-agent
-  └─ /create-skill
-```
-
-### Progress Indication
-
-```
-Creating plugin...
-  ⠋ Creating folders
-  ✅ Folders created
-  ⠙ Writing files
-  ✅ Files written
-  ⠹ Validating structure
-  ✅ Validation complete
-✅ Done!
-```
-
-### Confirmation
-
-```
-Are you sure you want to delete my-plugin?
-(This cannot be undone)
-
-[Yes, delete]  [No, cancel]
-```
-
-## Workflow Patterns
-
-### Simple Linear
-
+**Linear:**
 ```
 /create → /design → /test → /deploy
 ```
 
-### Branching
-
+**Branching:**
 ```
 /test
-  ├─ Tests pass → /deploy
-  └─ Tests fail → Fix issues → /test again
+  ├─ Pass → /deploy
+  └─ Fail → Fix → /test
 ```
 
-### Exploratory
+## Real-World Projects
 
-```
-/explore-agents
-  ├─ Agent details
-  └─ Related agents
-```
+### Project 1: Simple Command
+```markdown
+# /greet - Say hello
 
-## Help System
+## What This Does
+Displays a greeting message.
 
-### Context-Sensitive Help
+## Usage
+/greet [name]
 
-```
-After error:
-❌ Skill name invalid
-💡 Need help?
-  ├─ Show format examples
-  ├─ Visit docs
-  └─ Ask @plugin-developer
-```
+## Example
+$ /greet World
+Hello, World! 👋
 
-### Progressive Complexity
-
-```
-Level 1: What does this command do?
-Level 2: How do I use it?
-Level 3: What options are available?
-Level 4: Advanced use cases?
+## Next Steps
+Try: /help for more commands
 ```
 
-## User Feedback Integration
+### Project 2: Interactive Command
+```markdown
+# /setup - Setup wizard
 
-### Suggestions
+## Usage
+/setup
 
+## Flow
+1. Ask project name
+2. Select template
+3. Configure options
+4. Generate files
+5. Show next steps
 ```
-Users often ask about:
-├─ "How do I structure my plugin?"
-  → /design-plugin command
-└─ "How do I test it?"
-  → /test-plugin command
+
+---
+
+## 🔧 TROUBLESHOOTING
+
+### Common UX Issues
+
+| Issue | Cause | Solution |
+|-------|-------|----------|
+| Confusing command | Unclear naming | Use verb-noun |
+| Too many options | Feature creep | Progressive disclosure |
+| No feedback | Missing status | Add progress |
+| Unclear error | Technical jargon | Plain language |
+| Stuck workflow | No next step | Always suggest |
+
+### UX Audit Checklist
+
+```markdown
+□ Command Naming
+  → Verb-noun pattern?
+  → Self-explanatory?
+
+□ Error Handling
+  → Clear messages?
+  → Solutions provided?
+
+□ Feedback
+  → Progress shown?
+  → Next steps suggested?
+
+□ Accessibility
+  → Works without color?
+  → Clear language?
 ```
 
-### Common Issues
+### UX Scoring Rubric
 
+| Category | Weight | Criteria |
+|----------|--------|----------|
+| Clarity | 25% | Self-explanatory |
+| Feedback | 25% | Progress shown |
+| Errors | 20% | Helpful messages |
+| Consistency | 15% | Uniform patterns |
+| Accessibility | 15% | Universal design |
+
+**Target Score: 85%+**
+
+### Recovery Procedures
+
+**Unclear Command:**
 ```
-We notice users struggle with:
-├─ JSON formatting
-  → Add JSON validation
-└─ Naming conventions
-  → Add clear examples
+1. Rename to verb-noun
+2. Add description
+3. Include examples
+4. Test with users
+```
+
+**Confusing Error:**
+```
+1. Identify actual cause
+2. Write plain language
+3. Add fix steps
+4. Link to help
 ```
 
 ---

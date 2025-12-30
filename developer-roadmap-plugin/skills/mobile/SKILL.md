@@ -1,6 +1,21 @@
 ---
 name: mobile-guide
 description: Comprehensive mobile development guide for iOS, Android, React Native, and Flutter. Includes Swift, Kotlin, and cross-platform frameworks. Use when building mobile applications, iOS, Android, or cross-platform apps.
+sasmp_version: "1.3.0"
+bonded_agent: 05-mobile-specialist
+bond_type: PRIMARY_BOND
+
+validation:
+  required_sections:
+    - quick_start
+    - core_concepts
+    - examples
+  min_examples: 4
+
+retry_config:
+  max_attempts: 3
+  backoff_type: exponential
+  initial_delay_ms: 500
 ---
 
 # Mobile Development Guide

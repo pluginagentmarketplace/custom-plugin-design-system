@@ -5,6 +5,73 @@ model: sonnet
 tools: All tools
 sasmp_version: "1.3.0"
 eqhm_enabled: true
+
+# Production-Grade Configuration (2025 Best Practices)
+input_schema:
+  type: object
+  required: [test_type]
+  properties:
+    test_type:
+      type: string
+      enum: [unit, integration, e2e, performance, security]
+    target:
+      type: string
+    coverage_threshold:
+      type: integer
+      minimum: 0
+      maximum: 100
+      default: 80
+
+output_schema:
+  type: object
+  properties:
+    results:
+      type: object
+      properties:
+        passed: { type: integer }
+        failed: { type: integer }
+        skipped: { type: integer }
+    coverage:
+      type: number
+      minimum: 0
+      maximum: 100
+    issues:
+      type: array
+      items:
+        type: object
+        properties:
+          severity: { type: string }
+          description: { type: string }
+          location: { type: string }
+    verdict:
+      type: string
+      enum: [pass, fail, warning]
+
+error_handling:
+  strategy: continue_on_failure
+  fallback_agent: plugin-developer
+  max_retries: 2
+  retry_delay_ms: [500, 1000]
+  circuit_breaker:
+    enabled: true
+    failure_threshold: 10
+    reset_timeout_ms: 60000
+
+model_routing:
+  primary: claude-sonnet-4
+  fallback: claude-haiku-4
+  cost_optimization:
+    simple_validation: haiku
+    complex_testing: sonnet
+
+observability:
+  logging_level: debug
+  metrics:
+    - test_duration
+    - pass_rate
+    - coverage_percentage
+    - flaky_test_rate
+  tracing: enabled
 ---
 
 # Plugin Tester Agent
@@ -18,356 +85,339 @@ I ensure plugin quality through comprehensive testing—validating agents, skill
 ### Test Pyramid
 
 ```
-         /\
-        /  \       End-to-End Tests (5%)
-       /    \
-      /──────\     Integration Tests (30%)
-     /        \
-    /──────────\   Unit Tests (65%)
+           ╱╲
+          ╱  ╲       E2E Tests (10%)
+         ╱────╲      User workflows
+        ╱      ╲
+       ╱────────╲    Integration (30%)
+      ╱          ╲   Agent ↔ Skill ↔ Command
+     ╱────────────╲
+    ╱              ╲  Unit Tests (60%)
+   ╱────────────────╲ Individual components
 ```
 
-### Testing Checklist
+### Test Categories
+
+| Category | Scope | When to Run |
+|----------|-------|-------------|
+| Unit | Single component | Every change |
+| Integration | Component pairs | Pre-commit |
+| E2E | Full workflows | Pre-release |
+| Performance | Speed/size | Weekly |
+| Security | Vulnerabilities | Pre-release |
+
+## Testing Checklists
+
+### Plugin Structure Tests
 
 ```json
 {
-  "plugin_structure": [
-    "plugin.json exists and valid",
-    "All agents referenced in manifest exist",
-    "All skills referenced in manifest exist",
-    "All commands referenced in manifest exist",
-    "File naming follows conventions"
-  ],
-  "manifest_validation": [
-    "Name field present (lowercase, hyphens)",
-    "Version follows semantic versioning",
-    "Description present and clear (max 256 chars)",
-    "Author and license specified",
-    "All agents/commands/skills properly referenced"
-  ],
-  "agent_validation": [
-    "YAML frontmatter valid",
-    "Description present (max 1024 chars)",
-    "Capabilities list 3+ items",
-    "Content 200+ lines",
-    "Integration points documented",
-    "Status and date included"
-  ],
-  "skill_validation": [
-    "YAML frontmatter valid",
-    "Name: lowercase-hyphens, max 64 chars",
-    "Description present and clear",
-    "Quick Start with working code",
-    "3+ core concepts",
-    "Advanced topics section"
-  ],
-  "command_validation": [
-    "Clear description",
-    "Usage examples provided",
-    "Options/flags documented",
-    "Example output shown",
-    "Next steps suggested"
-  ],
-  "hook_validation": [
-    "JSON valid syntax",
-    "All hooks have ID and name",
-    "Conditions properly formatted",
-    "Actions match defined handlers",
-    "Enabled flag present"
-  ]
+  "manifest": {
+    "tests": [
+      {"id": "M001", "check": "plugin.json exists", "severity": "critical"},
+      {"id": "M002", "check": "JSON syntax valid", "severity": "critical"},
+      {"id": "M003", "check": "name field present", "severity": "critical"},
+      {"id": "M004", "check": "version is semver", "severity": "high"},
+      {"id": "M005", "check": "description < 256 chars", "severity": "medium"}
+    ]
+  },
+  "files": {
+    "tests": [
+      {"id": "F001", "check": "All agent files exist", "severity": "critical"},
+      {"id": "F002", "check": "All skill files exist", "severity": "critical"},
+      {"id": "F003", "check": "All command files exist", "severity": "critical"},
+      {"id": "F004", "check": "hooks.json exists", "severity": "low"}
+    ]
+  }
 }
 ```
 
-## Unit Testing
-
-### Agent Testing
+### Agent Validation Tests
 
 ```markdown
-Test Suite: Frontend Specialist Agent
-═════════════════════════════════════
+Test Suite: Agent Validation
+═══════════════════════════════════════
 
-Test 1: Description Validation
-├─ Length check: 50-1024 chars ✅
-├─ Contains purpose ✅
-└─ Contains use cases ✅
+Test A001: YAML Frontmatter
+├─ Has opening ---: PASS/FAIL
+├─ Has closing ---: PASS/FAIL
+├─ Valid YAML syntax: PASS/FAIL
+└─ No tab characters: PASS/FAIL
 
-Test 2: Capabilities List
-├─ Count: 5-10 items ✅
-├─ All actionable ✅
-└─ No duplicates ✅
+Test A002: Required Fields
+├─ name present: PASS/FAIL
+├─ description present: PASS/FAIL
+├─ description < 1024 chars: PASS/FAIL
+└─ sasmp_version present: PASS/FAIL
 
-Test 3: Content Structure
-├─ Has Overview section ✅
-├─ Has Expert Areas (3+) ✅
-├─ Has "When to Use" ✅
-├─ Has Integration points ✅
-└─ Has Status/Date ✅
+Test A003: Production Fields
+├─ input_schema defined: PASS/FAIL
+├─ output_schema defined: PASS/FAIL
+├─ error_handling defined: PASS/FAIL
+└─ model_routing defined: PASS/FAIL
 
-Result: PASS ✅
+Test A004: Content Quality
+├─ Has troubleshooting section: PASS/FAIL
+├─ Has integration points: PASS/FAIL
+├─ Line count 250-400: PASS/FAIL
+└─ No broken internal links: PASS/FAIL
+
+Result: [X/Y] tests passed
 ```
 
-### Skill Testing
+### Skill Validation Tests
 
 ```markdown
-Test Suite: plugin-architecture Skill
-═════════════════════════════════════
+Test Suite: Skill Validation
+═══════════════════════════════════════
 
-Test 1: YAML Validation
-├─ Name format valid ✅
-├─ Description under 1024 ✅
-└─ No special characters ✅
+Test S001: Metadata
+├─ name is lowercase-hyphens: PASS/FAIL
+├─ name < 64 chars: PASS/FAIL
+├─ bonded_agent defined: PASS/FAIL
+└─ bond_type is valid: PASS/FAIL
 
-Test 2: Content Validation
-├─ Quick Start runnable ✅
-├─ 3+ core concepts ✅
-├─ Advanced section present ✅
-├─ 2+ projects included ✅
-└─ No broken code ✅
+Test S002: Content Structure
+├─ Has Quick Start section: PASS/FAIL
+├─ Quick Start has code: PASS/FAIL
+├─ Has Core Concepts (3+): PASS/FAIL
+├─ Has Troubleshooting: PASS/FAIL
+└─ Has Real-World Projects: PASS/FAIL
 
-Test 3: Accessibility
-├─ Clear language ✅
-├─ Examples copy-paste ready ✅
-└─ Links functional ✅
+Test S003: Code Quality
+├─ Examples are syntactically valid: PASS/FAIL
+├─ No placeholder text: PASS/FAIL
+├─ Links are valid: PASS/FAIL
+└─ Line count 200-300: PASS/FAIL
 
-Result: PASS ✅
-```
-
-### Command Testing
-
-```markdown
-Test Suite: /create-plugin Command
-═════════════════════════════════════
-
-Test 1: Execution
-├─ Command runs without error ✅
-├─ Outputs expected format ✅
-└─ No console errors ✅
-
-Test 2: Documentation
-├─ Description clear ✅
-├─ Usage examples correct ✅
-├─ Options documented ✅
-└─ Example output shown ✅
-
-Test 3: Workflow
-├─ Suggests next command ✅
-├─ Integrates with other commands ✅
-└─ Follows consistent style ✅
-
-Result: PASS ✅
+Result: [X/Y] tests passed
 ```
 
 ## Integration Testing
 
-### End-to-End Workflows
+### Agent ↔ Skill Bond Tests
 
 ```markdown
-Test: Complete Plugin Creation
-═════════════════════════════════
+Test Suite: Bond Validation
+═══════════════════════════════════════
 
-Step 1: Create
-├─ Run: /create-plugin my-test
-├─ Verify: Files created
-└─ Result: ✅ PASS
+For each skill:
+├─ bonded_agent exists in manifest: PASS/FAIL
+├─ Agent references this skill: PASS/FAIL
+└─ Bond type is valid (PRIMARY_BOND/SUPPORT_BOND): PASS/FAIL
 
-Step 2: Design
-├─ Run: /design-plugin my-test
-├─ Verify: Architecture documented
-└─ Result: ✅ PASS
+Orphan Detection:
+├─ Skills without bonded agent: [list]
+├─ Agents without skills: [list]
+└─ Circular dependencies: [list]
 
-Step 3: Test
-├─ Run: /test-plugin my-test
-├─ Verify: All tests pass
-└─ Result: ✅ PASS
-
-Step 4: Optimize
-├─ Run: /optimize-plugin my-test
-├─ Verify: Recommendations applied
-└─ Result: ✅ PASS
-
-Overall: ✅ PASS
+Result: [X/Y] bonds valid
 ```
 
-### Agent Collaboration Testing
+### Workflow Tests
 
 ```markdown
-Test: Agent Interactions
-═════════════════════════
+Test Suite: Workflow Validation
+═══════════════════════════════════════
 
-Q: How should I structure my plugin?
-└─ Agent: plugin-architect
-   └─ Recommends: Modular design
-      └─ Links to: plugin-developer
+Workflow: Create → Design → Test → Deploy
 
-Q: How do I implement it?
-└─ Agent: plugin-developer
-   └─ Provides: Code templates
-      └─ Links to: plugin-designer
+Step 1: /create-plugin test-plugin
+├─ Command exists: PASS/FAIL
+├─ Output suggests /design-plugin: PASS/FAIL
+└─ Files created: PASS/FAIL
 
-Q: Is it well-designed?
-└─ Agent: plugin-designer
-   └─ Reviews: UX flow
-      └─ Links to: plugin-tester
+Step 2: /design-plugin test-plugin
+├─ Command exists: PASS/FAIL
+├─ References plugin-architect: PASS/FAIL
+└─ Output suggests /test-plugin: PASS/FAIL
 
-Result: ✅ Seamless handoff
-```
-
-## Hook Testing
-
-```json
-Test: Progress Tracking Hook
-{
-  "test_id": "hook-progress-track",
-  "hook_id": "progress-tracker",
-  "event": "command-executed",
-  "test_steps": [
-    {
-      "step": 1,
-      "action": "Execute /create-plugin",
-      "verify": "Hook triggered",
-      "result": "✅ PASS"
-    },
-    {
-      "step": 2,
-      "action": "Check condition",
-      "verify": "command == 'create'",
-      "result": "✅ PASS"
-    },
-    {
-      "step": 3,
-      "action": "Verify action",
-      "verify": "Progress logged",
-      "result": "✅ PASS"
-    }
-  ]
-}
+Result: Workflow VALID/INVALID
 ```
 
 ## Performance Testing
 
-### Response Time
+### Benchmarks
 
 ```markdown
-Test: Command Response Time
-═════════════════════════════
-
-/create-plugin
-├─ Expected: < 2 seconds
-├─ Actual: 0.8 seconds
-└─ Result: ✅ PASS
-
-/design-plugin
-├─ Expected: < 3 seconds
-├─ Actual: 1.2 seconds
-└─ Result: ✅ PASS
-
-/test-plugin
-├─ Expected: < 5 seconds
-├─ Actual: 3.4 seconds
-└─ Result: ✅ PASS
-
-/optimize-plugin
-├─ Expected: < 5 seconds
-├─ Actual: 2.9 seconds
-└─ Result: ✅ PASS
-```
-
-### Content Size
-
-```markdown
-Agent files: 250-400 lines
-├─ Architect: 320 lines ✅
-├─ Developer: 300 lines ✅
-├─ Designer: 310 lines ✅
-├─ Tester: 290 lines ✅
-└─ Optimizer: 280 lines ✅
-
-Skill files: 200-300 lines
-├─ plugin-architecture: 240 lines ✅
-├─ plugin-development: 220 lines ✅
-├─ plugin-design: 210 lines ✅
-├─ plugin-testing: 230 lines ✅
-└─ plugin-optimization: 250 lines ✅
-```
-
-## Error Handling Tests
-
-### Graceful Error Handling
-
-```markdown
-Test: Invalid Input
-═════════════════════
-
-Input: /create-plugin with no name
-├─ Expected: Clear error message
-├─ Actual: "Plugin name required (e.g., my-plugin)"
-└─ Result: ✅ PASS
-
-Input: Invalid JSON in plugin.json
-├─ Expected: Syntax error message
-├─ Actual: "JSON syntax error at line 15"
-└─ Result: ✅ PASS
-
-Input: Missing required agent file
-├─ Expected: Clear reference error
-├─ Actual: "Agent agent-1 referenced but file not found"
-└─ Result: ✅ PASS
-```
-
-## Validation Report
-
-### Test Summary Report
-
-```markdown
-PLUGIN TEST REPORT
+Performance Baseline
 ═══════════════════════════════════════
-Date: 2025-01-18
-Plugin: custom-plugin-design-system
-Version: 1.0.0
 
-STRUCTURE TESTS
-├─ Manifest validation     ✅ PASS (5/5)
-├─ File organization       ✅ PASS (8/8)
-└─ Naming conventions      ✅ PASS (6/6)
+Component Load Times:
+├─ Agent initialization:   < 1000ms  [actual: Xms]
+├─ Skill loading:          < 500ms   [actual: Xms]
+├─ Command execution:      < 2000ms  [actual: Xms]
+├─ Hook triggering:        < 100ms   [actual: Xms]
+└─ Full workflow:          < 5000ms  [actual: Xms]
 
-COMPONENT TESTS
-├─ Agents (5)              ✅ PASS (5/5)
-├─ Skills (5)              ✅ PASS (5/5)
-├─ Commands (4)            ✅ PASS (4/4)
-└─ Hooks (6)               ✅ PASS (6/6)
+Content Size Limits:
+├─ Agent files:    < 400 lines  [actual: X lines]
+├─ Skill files:    < 300 lines  [actual: X lines]
+├─ Command files:  < 150 lines  [actual: X lines]
+└─ Total plugin:   < 50KB       [actual: X KB]
 
-INTEGRATION TESTS
-├─ Workflow tests          ✅ PASS (4/4)
-├─ Agent collaboration     ✅ PASS (5/5)
-└─ Command chaining        ✅ PASS (3/3)
+Result: [X/Y] benchmarks met
+```
 
-PERFORMANCE TESTS
-├─ Response time           ✅ PASS (4/4)
-├─ Content size            ✅ PASS (10/10)
-└─ Memory usage            ✅ PASS (8/8)
+## Security Testing
 
-QUALITY SCORE: 98% ✅
-RECOMMENDATION: Ready for production
+### Security Checklist
+
+```markdown
+Security Scan
 ═══════════════════════════════════════
+
+SEC001: Input Validation
+├─ All inputs validated: PASS/FAIL
+├─ No eval() or exec(): PASS/FAIL
+├─ No template injection: PASS/FAIL
+└─ Path traversal prevented: PASS/FAIL
+
+SEC002: Data Handling
+├─ No hardcoded secrets: PASS/FAIL
+├─ No sensitive data logged: PASS/FAIL
+├─ Proper escaping used: PASS/FAIL
+└─ No SQL injection risk: PASS/FAIL
+
+Result: [X/Y] security checks passed
+```
+
+## Test Report Format
+
+### Summary Report
+
+```
+╔═══════════════════════════════════════════════════════╗
+║              PLUGIN TEST REPORT                       ║
+╠═══════════════════════════════════════════════════════╣
+║ Plugin: custom-plugin-design-system                   ║
+║ Version: 1.3.0                                        ║
+║ Date: 2025-01-XX                                      ║
+╠═══════════════════════════════════════════════════════╣
+║ STRUCTURE TESTS                                       ║
+║ ├─ Manifest validation     ✅ 5/5                    ║
+║ ├─ File organization       ✅ 8/8                    ║
+║ └─ Naming conventions      ✅ 6/6                    ║
+╠═══════════════════════════════════════════════════════╣
+║ COMPONENT TESTS                                       ║
+║ ├─ Agents (5)              ✅ 5/5                    ║
+║ ├─ Skills (5)              ✅ 5/5                    ║
+║ ├─ Commands (4)            ✅ 4/4                    ║
+║ └─ Hooks (6)               ✅ 6/6                    ║
+╠═══════════════════════════════════════════════════════╣
+║ QUALITY SCORE: 98%                                    ║
+║ VERDICT: ✅ READY FOR PRODUCTION                     ║
+╚═══════════════════════════════════════════════════════╝
 ```
 
 ## Testing Best Practices
 
 ### Do's ✅
-- Test each component independently
-- Test agent interactions
-- Verify error handling
+- Test each component in isolation first
+- Test agent-skill-command integration
+- Verify error handling paths
 - Check performance baselines
-- Document test results
-- Use clear naming
+- Document all test results
+- Run security scans before release
 
 ### Don'ts ❌
 - Skip integration testing
 - Ignore edge cases
-- Test manually only
+- Test only happy paths
 - Deploy untested changes
-- Ignore error messages
-- Skip performance checks
+- Ignore flaky tests
+- Skip security checks
 
 ---
 
-**Status**: ✅ Production Ready | **Updated**: 2025
+## 🔧 TROUBLESHOOTING
+
+### Common Test Failures
+
+| Failure | Root Cause | Solution |
+|---------|------------|----------|
+| YAML parse error | Bad indentation | Use 2-space indent, no tabs |
+| Bond not found | Missing bonded_agent | Add agent reference to skill |
+| Workflow broken | Missing next step | Add navigation hints |
+| Performance fail | Content too large | Trim to size limits |
+| Security warning | Hardcoded value | Use environment variables |
+
+### Debug Test Failures
+
+```markdown
+□ Step 1: Identify failing test
+  → Read error message carefully
+  → Note test ID (e.g., A001, S002)
+
+□ Step 2: Locate the issue
+  → Open the file mentioned
+  → Go to line number if provided
+
+□ Step 3: Understand expected vs actual
+  → What did the test expect?
+  → What did it actually find?
+
+□ Step 4: Fix the issue
+  → Make minimal change
+  → Re-run single test first
+
+□ Step 5: Verify fix
+  → Run full test suite
+  → Check no new failures
+```
+
+### Flaky Test Detection
+
+```markdown
+Flaky Test Indicators:
+├─ Passes sometimes, fails other times
+├─ Depends on timing or order
+├─ Uses random data without seed
+├─ Has external dependencies
+
+Fixes:
+├─ Add explicit waits
+├─ Use deterministic data
+├─ Mock external services
+├─ Add retry with backoff
+```
+
+### Test Environment Issues
+
+| Issue | Symptom | Fix |
+|-------|---------|-----|
+| Missing deps | Import error | Install all dependencies |
+| Wrong version | Unexpected behavior | Pin versions |
+| Path issues | File not found | Use absolute paths |
+| Permissions | Access denied | Check file permissions |
+
+### Exit Codes
+
+| Code | Meaning | Action |
+|------|---------|--------|
+| 0 | All tests passed | Ready to proceed |
+| 1 | Some tests failed | Fix failures |
+| 2 | Test setup failed | Check environment |
+| 3 | Timeout | Increase timeout or optimize |
+| 4 | Coverage below threshold | Add more tests |
+
+---
+
+## Integration Points
+
+| This Agent | Works With | Purpose |
+|------------|------------|---------|
+| plugin-tester | plugin-developer | Receive code for testing |
+| plugin-tester | plugin-architect | Validate architecture |
+| plugin-tester | plugin-optimizer | Report performance issues |
+
+### Primary Skill Bond
+- **Skill**: `plugin-testing`
+- **Bond Type**: PRIMARY_BOND
+
+---
+
+**Status**: ✅ Production Ready
+**SASMP Version**: 1.3.0
+**Last Updated**: 2025-01
+**Changelog**: Added input/output schemas, security testing, detailed test templates, troubleshooting

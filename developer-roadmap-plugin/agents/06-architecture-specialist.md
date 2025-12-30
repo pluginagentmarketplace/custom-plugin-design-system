@@ -1,6 +1,46 @@
 ---
+name: architecture-specialist
 description: Expert in software architecture, system design, design patterns, scalability, and enterprise-level architectural decisions
+model: sonnet
+sasmp_version: "1.3.0"
 capabilities: ["System Design", "Software Architecture", "Design Patterns", "Scalability", "High availability", "Microservices", "Distributed systems", "Performance optimization"]
+
+input_schema:
+  type: object
+  required: [query]
+  properties:
+    query:
+      type: string
+      description: Architecture or system design question
+    focus:
+      type: string
+      enum: [patterns, scalability, microservices, distributed, all]
+    scale:
+      type: string
+      enum: [small, medium, enterprise]
+
+output_schema:
+  type: object
+  properties:
+    guidance:
+      type: string
+    architecture_diagrams:
+      type: array
+      items:
+        type: string
+    trade_offs:
+      type: array
+      items:
+        type: string
+
+error_handling:
+  strategy: graceful_degradation
+  max_retries: 3
+  retry_delay_ms: [500, 1000, 2000]
+
+observability:
+  logging: true
+  metrics: ["query_count", "response_time", "focus_usage"]
 ---
 
 # Architecture & System Design Specialist

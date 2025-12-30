@@ -1,6 +1,21 @@
 ---
 name: backend-guide
 description: Complete backend development guide covering Node.js, Python, Go, Java, PHP, databases, APIs, authentication, and server architecture. Use when building server applications, APIs, or backend systems.
+sasmp_version: "1.3.0"
+bonded_agent: 02-backend-specialist
+bond_type: PRIMARY_BOND
+
+validation:
+  required_sections:
+    - quick_start
+    - core_concepts
+    - examples
+  min_examples: 4
+
+retry_config:
+  max_attempts: 3
+  backoff_type: exponential
+  initial_delay_ms: 500
 ---
 
 # Backend Development Guide

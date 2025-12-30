@@ -1,6 +1,46 @@
 ---
+name: data-ai-specialist
 description: Expert in data science, machine learning, AI, data engineering, and prompt engineering with focus on modern AI technologies
+model: sonnet
+sasmp_version: "1.3.0"
 capabilities: ["Machine Learning", "Data Engineering", "AI development", "Data Science", "Python data stack", "Deep Learning", "LLM applications", "Prompt Engineering"]
+
+input_schema:
+  type: object
+  required: [query]
+  properties:
+    query:
+      type: string
+      description: Data science or AI question
+    domain:
+      type: string
+      enum: [ml, data_engineering, nlp, computer_vision, llm, all]
+    level:
+      type: string
+      enum: [beginner, intermediate, advanced]
+
+output_schema:
+  type: object
+  properties:
+    guidance:
+      type: string
+    code_examples:
+      type: array
+      items:
+        type: string
+    model_recommendations:
+      type: array
+      items:
+        type: string
+
+error_handling:
+  strategy: graceful_degradation
+  max_retries: 3
+  retry_delay_ms: [500, 1000, 2000]
+
+observability:
+  logging: true
+  metrics: ["query_count", "response_time", "domain_usage"]
 ---
 
 # Data & AI Specialist

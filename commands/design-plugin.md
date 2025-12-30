@@ -1,7 +1,32 @@
 ---
 name: design-plugin
-description: plugin - Design Plugin Architecture
+description: Design and optimize plugin architecture with structure analysis and recommendations
+sasmp_version: "1.3.0"
 allowed-tools: Read
+
+# Exit Codes
+exit_codes:
+  0: success
+  1: invalid_input
+  2: plugin_not_found
+  3: analysis_error
+  4: report_generation_failed
+  5: validation_failed
+
+# Input Validation
+validation:
+  plugin_name:
+    pattern: "^[a-z][a-z0-9-]{2,49}$"
+    required: true
+  mode:
+    type: string
+    enum: [review, restructure, report, architecture, integrations]
+
+# Retry Configuration
+retry_config:
+  max_attempts: 3
+  backoff_type: exponential
+  initial_delay_ms: 500
 ---
 
 # /design-plugin - Design Plugin Architecture
@@ -239,6 +264,63 @@ Fix: Use verb-noun pattern consistently
 - `/create-plugin` - Create new plugin
 - `/test-plugin` - Test architecture
 - `/optimize-plugin` - Optimize design
+
+---
+
+## 🔧 TROUBLESHOOTING
+
+### Error Messages
+
+| Error | Code | Cause | Solution |
+|-------|------|-------|----------|
+| `Invalid plugin name` | 1 | Name format wrong | Use lowercase-hyphen format |
+| `Plugin not found` | 2 | Directory doesn't exist | Run /create-plugin first |
+| `Analysis failed` | 3 | Corrupt files | Validate individual files |
+| `Report generation failed` | 4 | Output error | Check disk space |
+| `Validation failed` | 5 | Structure invalid | Run /test-plugin for details |
+
+### Debug Checklist
+
+```markdown
+□ Step 1: Verify plugin exists
+  → Directory present?
+  → plugin.json valid?
+  → Files accessible?
+
+□ Step 2: Check structure
+  → agents/ folder exists?
+  → skills/ folder exists?
+  → commands/ folder exists?
+
+□ Step 3: Validate content
+  → YAML frontmatter valid?
+  → All references resolve?
+  → No circular deps?
+
+□ Step 4: Run diagnostics
+  → /test-plugin for details
+  → Check individual files
+```
+
+### Common Design Issues
+
+| Issue | Cause | Solution |
+|-------|-------|----------|
+| Low design score | Missing sections | Add required content |
+| Integration warnings | Orphan agents | Link agents to skills |
+| Architecture issues | Too many agents | Consolidate to 3-5 |
+| Documentation gaps | Missing descriptions | Add to each component |
+
+### Exit Codes Reference
+
+| Code | Meaning | Action |
+|------|---------|--------|
+| 0 | Success | Review recommendations |
+| 1 | Invalid input | Check plugin name format |
+| 2 | Not found | Create plugin first |
+| 3 | Analysis error | Check file integrity |
+| 4 | Report failed | Check disk/permissions |
+| 5 | Validation failed | Fix structure issues |
 
 ---
 

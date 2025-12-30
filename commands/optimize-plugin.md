@@ -1,7 +1,36 @@
 ---
 name: optimize-plugin
-description: plugin - Optimize & Deploy Plugin
+description: Optimize plugin for performance, quality, and marketplace readiness with automated improvements
+sasmp_version: "1.3.0"
 allowed-tools: Read
+
+# Exit Codes
+exit_codes:
+  0: optimization_complete
+  1: invalid_input
+  2: plugin_not_found
+  3: optimization_failed
+  4: marketplace_check_failed
+  5: pre_submit_failed
+  6: version_bump_failed
+
+# Input Validation
+validation:
+  plugin_name:
+    pattern: "^[a-z][a-z0-9-]{2,49}$"
+    required: true
+  optimization_type:
+    type: string
+    enum: [performance, marketplace, pre-submit, auto-apply, report]
+  version_bump:
+    type: string
+    enum: [patch, minor, major]
+
+# Retry Configuration
+retry_config:
+  max_attempts: 3
+  backoff_type: exponential
+  initial_delay_ms: 500
 ---
 
 # /optimize-plugin - Optimize & Deploy Plugin
@@ -311,6 +340,94 @@ After Release:
 - `/create-plugin` - Create plugin
 - `/design-plugin` - Design architecture
 - `/test-plugin` - Test plugin
+
+---
+
+## 🔧 TROUBLESHOOTING
+
+### Error Messages
+
+| Error | Code | Cause | Solution |
+|-------|------|-------|----------|
+| `Invalid plugin name` | 1 | Name format wrong | Use lowercase-hyphen format |
+| `Plugin not found` | 2 | Directory missing | Run /create-plugin first |
+| `Optimization failed` | 3 | Cannot apply changes | Check file permissions |
+| `Marketplace check failed` | 4 | Missing requirements | Complete checklist items |
+| `Pre-submit failed` | 5 | Quality below threshold | Run /test-plugin, fix issues |
+| `Version bump failed` | 6 | Invalid version | Use semantic versioning |
+
+### Debug Checklist
+
+```markdown
+□ Step 1: Check current state
+  → Run /test-plugin first
+  → All tests passing?
+
+□ Step 2: Review requirements
+  → Marketplace checklist complete?
+  → Documentation present?
+  → Examples working?
+
+□ Step 3: Verify quality
+  → Score above 80%?
+  → No critical issues?
+  → Performance within limits?
+
+□ Step 4: Pre-submit check
+  → All files valid?
+  → References resolved?
+  → License included?
+```
+
+### Optimization Failures
+
+| Failure | Cause | Solution |
+|---------|-------|----------|
+| Score won't improve | Fundamental issues | Address architecture first |
+| Auto-apply rejected | Risky changes | Review manually |
+| Marketplace blocked | Missing metadata | Complete plugin.json |
+| Version conflict | Already exists | Increment version |
+
+### Marketplace Rejection Reasons
+
+| Reason | Fix |
+|--------|-----|
+| Invalid manifest | Validate plugin.json |
+| Missing README | Add comprehensive README |
+| No license | Add MIT/Apache/GPL license |
+| Quality too low | Score must be 80%+ |
+| Security issues | Run security scan |
+
+### Version Bump Guide
+
+```markdown
+PATCH (1.0.0 → 1.0.1)
+├─ Bug fixes
+├─ Minor improvements
+└─ No API changes
+
+MINOR (1.0.0 → 1.1.0)
+├─ New features
+├─ New agents/skills
+└─ Backwards compatible
+
+MAJOR (1.0.0 → 2.0.0)
+├─ Breaking changes
+├─ Major refactoring
+└─ API changes
+```
+
+### Exit Codes Reference
+
+| Code | Meaning | Action |
+|------|---------|--------|
+| 0 | Complete | Ready to deploy |
+| 1 | Invalid input | Check plugin name |
+| 2 | Not found | Create plugin first |
+| 3 | Optimization failed | Check permissions/files |
+| 4 | Marketplace failed | Complete requirements |
+| 5 | Pre-submit failed | Fix quality issues |
+| 6 | Version failed | Use valid semver |
 
 ---
 

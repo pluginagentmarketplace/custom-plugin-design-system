@@ -1,7 +1,34 @@
 ---
 name: test-plugin
-description: plugin - Test & Validate Plugin
+description: Run comprehensive tests on plugin including structure, content, functionality, and performance validation
+sasmp_version: "1.3.0"
 allowed-tools: Read
+
+# Exit Codes
+exit_codes:
+  0: all_tests_pass
+  1: invalid_input
+  2: plugin_not_found
+  3: structure_tests_failed
+  4: content_tests_failed
+  5: functionality_tests_failed
+  6: performance_tests_failed
+  7: integration_tests_failed
+
+# Input Validation
+validation:
+  plugin_name:
+    pattern: "^[a-z][a-z0-9-]{2,49}$"
+    required: true
+  test_type:
+    type: string
+    enum: [full, structure, content, functionality, performance, integration]
+
+# Retry Configuration
+retry_config:
+  max_attempts: 3
+  backoff_type: exponential
+  initial_delay_ms: 500
 ---
 
 # /test-plugin - Test & Validate Plugin
@@ -237,6 +264,81 @@ Run: /test-plugin my-plugin again to verify
 - `/create-plugin` - Create new plugin
 - `/design-plugin` - Design architecture
 - `/optimize-plugin` - Optimize and deploy
+
+---
+
+## 🔧 TROUBLESHOOTING
+
+### Error Messages
+
+| Error | Code | Cause | Solution |
+|-------|------|-------|----------|
+| `Invalid plugin name` | 1 | Name format wrong | Use lowercase-hyphen format |
+| `Plugin not found` | 2 | Directory missing | Run /create-plugin first |
+| `Structure tests failed` | 3 | Missing/invalid files | Check plugin.json, folders |
+| `Content tests failed` | 4 | Invalid YAML/content | Validate frontmatter |
+| `Functionality tests failed` | 5 | Runtime errors | Check agent/skill loading |
+| `Performance tests failed` | 6 | Exceeds limits | Optimize file sizes |
+| `Integration tests failed` | 7 | Broken references | Fix bonded_agent links |
+
+### Debug Checklist
+
+```markdown
+□ Step 1: Identify failing test
+  → Note test ID (A001, S002, etc.)
+  → Read error message
+
+□ Step 2: Locate issue
+  → Open referenced file
+  → Find problematic line
+
+□ Step 3: Understand expected
+  → Check test criteria
+  → Compare with passing examples
+
+□ Step 4: Fix and verify
+  → Make minimal change
+  → Re-run specific test
+  → Run full suite
+```
+
+### Test Failure Patterns
+
+| Pattern | Cause | Fix |
+|---------|-------|-----|
+| All structure fail | Invalid plugin.json | Validate JSON syntax |
+| All content fail | YAML errors | Check indentation |
+| Random failures | Flaky tests | Add retry, check timing |
+| Performance fail | Large files | Trim to size limits |
+
+### Auto-Fix Capabilities
+
+```markdown
+Can auto-fix:
+✅ YAML formatting
+✅ Trim long descriptions
+✅ Fix naming conventions
+✅ Add missing fields
+
+Cannot auto-fix:
+❌ Logic errors
+❌ Complex refactoring
+❌ Security issues
+❌ Architecture problems
+```
+
+### Exit Codes Reference
+
+| Code | Meaning | Action |
+|------|---------|--------|
+| 0 | All pass | Proceed to /optimize-plugin |
+| 1 | Invalid input | Check plugin name |
+| 2 | Not found | Create plugin first |
+| 3 | Structure fail | Fix manifest/folders |
+| 4 | Content fail | Fix YAML/markdown |
+| 5 | Functionality fail | Debug runtime errors |
+| 6 | Performance fail | Optimize sizes |
+| 7 | Integration fail | Fix references |
 
 ---
 

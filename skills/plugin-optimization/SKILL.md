@@ -2,8 +2,21 @@
 name: plugin-optimization
 description: Master plugin performance optimization, best practices, and marketplace readiness. Learn to optimize for speed, efficiency, and user satisfaction.
 sasmp_version: "1.3.0"
-bonded_agent: 01-plugin-architect
+bonded_agent: 05-plugin-optimizer
 bond_type: PRIMARY_BOND
+
+# Production-Grade Configuration
+validation:
+  required_sections:
+    - quick_start
+    - core_concepts
+    - troubleshooting
+  min_examples: 4
+
+retry_config:
+  max_attempts: 3
+  backoff_type: exponential
+  initial_delay_ms: 500
 ---
 
 # Plugin Optimization
@@ -13,348 +26,236 @@ bond_type: PRIMARY_BOND
 Optimize your plugin:
 
 ```bash
-# Get optimization recommendations
+# Get recommendations
 /optimize-plugin my-plugin
 
-# Fix issues automatically
+# Auto-fix issues
 /optimize-plugin my-plugin --auto-fix
 
-# Detailed optimization report
+# Full report
 /optimize-plugin my-plugin --report
 ```
 
-## Performance Optimization
+## Core Concepts
 
-### Response Time Targets
+### Performance Targets
 
-```
-Agent invocation:     < 1 second
-Skill loading:        < 500ms
-Command execution:    < 2 seconds
-Hook triggering:      < 100ms
-Total workflow:       < 5 seconds
-```
+| Component | Target | Acceptable | Critical |
+|-----------|--------|------------|----------|
+| Agent init | < 500ms | < 1000ms | > 2000ms |
+| Skill load | < 300ms | < 500ms | > 1000ms |
+| Command | < 1000ms | < 2000ms | > 5000ms |
+| Hook | < 50ms | < 100ms | > 500ms |
+| Workflow | < 3000ms | < 5000ms | > 10000ms |
 
 ### Content Optimization
 
-Before:
+**Before (Verbose):**
 ```markdown
 This agent specializes in various aspects of the field,
 including many different topics that are related to the
-general area of expertise. The agent can help with many
-different things such as...
+general area of expertise.
 ```
 
-After:
+**After (Optimized):**
 ```markdown
-Specializes in X, Y, Z with focus on ABC.
+Expert in X, Y, Z. Focuses on production-grade solutions.
 ```
 
-## Best Practices
+**Impact:** 70% size reduction
 
-### Agent Best Practices
+### Size Limits
 
-```
-✅ DO:
-  ├─ Focus on single domain
-  ├─ Provide 5-10 capabilities
-  ├─ Document integrations
-  ├─ Use clear language
-  └─ Include status/date
+| Component | Min | Max | Optimal |
+|-----------|-----|-----|---------|
+| Agent | 200 | 400 | 280-320 |
+| Skill | 150 | 300 | 200-250 |
+| Command | 80 | 150 | 100-120 |
+| Plugin | - | 50KB | < 40KB |
 
-❌ DON'T:
-  ├─ Mix unrelated topics
-  ├─ Create vague descriptions
-  ├─ Ignore other agents
-  ├─ Use technical jargon
-  └─ Skip examples
-```
-
-### Skill Best Practices
+### Quality Score
 
 ```
-✅ DO:
-  ├─ Name lowercase-hyphenated
-  ├─ Provide Quick Start code
-  ├─ Explain core concepts
-  ├─ Include real projects
-  └─ Add usage guidelines
-
-❌ DON'T:
-  ├─ Use uppercase/underscores
-  ├─ Skip working examples
-  ├─ Theory only
-  ├─ Ignore real-world use
-  └─ Leave users confused
-```
-
-### Command Best Practices
-
-```
-✅ DO:
-  ├─ Use verb-noun naming
-  ├─ Document all options
-  ├─ Show example output
-  ├─ Suggest next steps
-  └─ Clear error messages
-
-❌ DON'T:
-  ├─ Generic names
-  ├─ Undocumented flags
-  ├─ Missing output examples
-  ├─ Leave guessing
-  └─ Cryptic errors
-```
-
-## File Size Optimization
-
-### Target Sizes
-
-```
-Agent files:    250-400 lines
-Skill files:    200-300 lines
-Command files:  100-150 lines
-Total plugin:   < 50KB
-```
-
-### Optimization Techniques
-
-```
-Trim verbose sections
-  → Remove redundant text
-  → Link to external resources
-  → Use clear headings
-
-Consolidate examples
-  → Use concise code
-  → Remove verbose comments
-  → Focus on essential cases
-
-Organize content
-  → Logical sections
-  → Clear headings
-  → Table formatting
-```
-
-## Marketplace Readiness
-
-### Pre-Submission Checklist
-
-```markdown
-STRUCTURE ✅
-  [✅] plugin.json valid
-  [✅] Files exist and referenced
-  [✅] Naming conventions followed
-  [✅] No broken references
-
-CONTENT ✅
-  [✅] README comprehensive
-  [✅] Examples working
-  [✅] All commands documented
-  [✅] Links verified
-
-QUALITY ✅
-  [✅] All tests passing
-  [✅] No console errors
-  [✅] Performance baseline met
-  [✅] Error handling complete
-
-STANDARDS ✅
-  [✅] YAML frontmatter valid
-  [✅] Markdown properly formatted
-  [✅] JSON valid syntax
-  [✅] No deprecated features
-```
-
-## Documentation Optimization
-
-### README Structure
-
-```markdown
-# Plugin Name
-[One-liner description]
-
-## Features
-[Key features]
-
-## Installation
-[One-liner install]
-
-## Quick Start
-[Get running in 30 seconds]
-
-## Usage
-[Command reference]
-
-## Documentation
-[Link to detailed docs]
-
-## Contributing
-[How to contribute]
-
-## License
-[MIT or other]
-```
-
-### Code Comments
-
-Before:
-```python
-# Process the data and return enriched information
-result = process_data(input)
-```
-
-After:
-```python
-# Process and return enriched data (Input: raw dict → Output: validated)
-result = process_data(input)
-```
-
-## Performance Metrics
-
-### Baseline Metrics
-
-```
-Load time:          < 500ms ✅
-Skill load:         < 300ms ✅
-Command response:   < 2s    ✅
-Hook trigger:       < 100ms ✅
-
-Test coverage:      > 90%   ✅
-Error rate:         < 1%    ✅
-Documentation:      100%    ✅
-Best practices:     > 95%   ✅
-```
-
-### Monitoring
-
-Track:
-```
-├─ Command usage patterns
-├─ Agent popularity
-├─ Skill effectiveness
-├─ Error occurrence rate
-├─ User feedback sentiment
-└─ Performance trends
-```
-
-## Deployment Optimization
-
-### Release Checklist
-
-```
-VERSION & DOCS
-  [✅] Version bumped (1.0.0)
-  [✅] CHANGELOG updated
-  [✅] README updated
-
-QUALITY
-  [✅] All tests pass
-  [✅] No warnings
-  [✅] No console errors
-  [✅] Performance ok
-
-CODE
-  [✅] All files present
-  [✅] References valid
-  [✅] Manifest valid
-  [✅] Lint passes
-
-DEPLOYMENT
-  [✅] Git tagged
-  [✅] Changes committed
-  [✅] Marketplace ready
-  [✅] Monitoring set up
-```
-
-## Optimization Priorities
-
-### Critical (Fix Immediately)
-
-```
-❌ Broken functionality
-❌ Invalid manifest
-❌ Missing core features
-❌ Security issues
-```
-
-### Important (Fix Soon)
-
-```
-⚠️  Performance below baseline
-⚠️  Incomplete documentation
-⚠️  Error handling gaps
-⚠️  Unclear UX
-```
-
-### Nice-to-Have (Enhance Later)
-
-```
-💡 Performance optimization
-💡 UX enhancements
-💡 Documentation polishing
-💡 Code organization
-```
-
-## Semantic Versioning
-
-### Version Updates
-
-```
-1.0.0 → 1.0.1  (Bug fixes, patches)
-1.0.0 → 1.1.0  (New features, backward compatible)
-1.0.0 → 2.0.0  (Breaking changes)
-```
-
-### Commit Messages
-
-```
-feat: Add new command
-fix: Correct agent description
-docs: Update documentation
-refactor: Improve structure
-perf: Optimize loading
-test: Add tests
-```
-
-## Quality Score Calculation
-
-```
-Structure:      30% (file org, manifest, naming)
-Content:        30% (quality, completeness, clarity)
-Functionality:  20% (working, integration, features)
-Performance:    10% (speed, size, efficiency)
-Documentation:  10% (README, examples, help)
+Score = Weighted Average:
+├─ Structure (30%)
+│  ├─ Manifest valid
+│  ├─ Files organized
+│  └─ Naming correct
+├─ Content (30%)
+│  ├─ Completeness
+│  └─ Clarity
+├─ Functionality (20%)
+│  ├─ Error handling
+│  └─ Integration
+├─ Performance (10%)
+└─ Documentation (10%)
 
 Target: 95%+ for production
+Minimum: 80% for marketplace
 ```
 
-## Continuous Improvement
+### Marketplace Readiness
 
-### Feedback Loop
+```markdown
+SUBMISSION CHECKLIST
+═══════════════════════════════
 
-```
-Deploy
-  ↓
-Monitor metrics
-  ↓
-Gather user feedback
-  ↓
-Identify improvements
-  ↓
-Update plugin
-  ↓
-Deploy again
+METADATA
+□ name: 20-50 chars
+□ version: semantic
+□ description: 100-256 chars
+□ license: MIT/Apache/GPL
+
+DOCUMENTATION
+□ README comprehensive
+□ CHANGELOG current
+□ Examples working
+
+QUALITY
+□ All tests pass
+□ No errors
+□ Performance met
+□ Security scan passed
 ```
 
-### Update Strategy
+## Advanced Topics
 
+### Optimization Priorities
+
+| Impact | Effort | Priority | Action |
+|--------|--------|----------|--------|
+| High | Low | P0 | Do now |
+| High | High | P1 | Plan |
+| Low | Low | P2 | Quick win |
+| Low | High | P3 | Later |
+
+### Release Workflow
+
+```markdown
+Pre-Release:
+├─ Version bump
+├─ Update CHANGELOG
+├─ Run test suite
+├─ Performance check
+└─ Security scan
+
+Release:
+├─ Create git tag
+├─ Push to main
+├─ Submit to marketplace
+└─ Announce
+
+Post-Release:
+├─ Monitor metrics
+├─ Respond to issues
+└─ Plan next iteration
 ```
-Weekly: Monitor metrics, collect feedback
-Monthly: Fix bugs, update docs
-Quarterly: Add features, optimize performance
-Annually: Major improvements, breaking changes
+
+### Semantic Versioning
+
+| Version | When | Example |
+|---------|------|---------|
+| PATCH | Bug fixes | 1.0.0 → 1.0.1 |
+| MINOR | New features | 1.0.0 → 1.1.0 |
+| MAJOR | Breaking changes | 1.0.0 → 2.0.0 |
+
+## Real-World Projects
+
+### Project 1: Performance Report
 ```
+╔════════════════════════════════════╗
+║     PERFORMANCE DASHBOARD          ║
+╠════════════════════════════════════╣
+║ LOAD TIMES          Target  Actual ║
+║ ├─ Plugin init:     500ms   320ms ✅║
+║ ├─ Agent call:      1000ms  650ms ✅║
+║ └─ Command:         2000ms  890ms ✅║
+╠════════════════════════════════════╣
+║ QUALITY             Target  Actual ║
+║ ├─ Test coverage:   90%     95%   ✅║
+║ └─ Best practices:  95%     98%   ✅║
+╚════════════════════════════════════╝
+```
+
+### Project 2: Optimization Plan
+```markdown
+OPTIMIZATION PLAN: my-plugin
+═══════════════════════════════
+
+P0 - CRITICAL (This Week)
+├─ Fix broken manifest
+└─ Add missing error handling
+
+P1 - HIGH (Next Sprint)
+├─ Reduce agent size
+└─ Add input validation
+
+P2 - MEDIUM (Backlog)
+├─ Improve docs
+└─ Add more examples
+```
+
+---
+
+## 🔧 TROUBLESHOOTING
+
+### Common Issues
+
+| Issue | Cause | Solution |
+|-------|-------|----------|
+| Slow load | Large content | Trim to limits |
+| Low score | Missing sections | Add required content |
+| Rejection | Invalid metadata | Fix manifest |
+| Regression | Recent changes | Revert, investigate |
+| High errors | Missing validation | Add input checks |
+
+### Debug Flow
+
+```markdown
+□ Step 1: Identify problem
+  → Check quality score
+  → Review metrics
+  → Read errors
+
+□ Step 2: Analyze cause
+  → Compare baseline
+  → Check changes
+  → Review tests
+
+□ Step 3: Plan fix
+  → Estimate impact
+  → Assess effort
+  → Prioritize
+
+□ Step 4: Implement
+  → Minimal change
+  → Test thoroughly
+  → Verify improvement
+
+□ Step 5: Validate
+  → Re-run benchmarks
+  → Confirm score
+  → Monitor
+```
+
+### Marketplace Rejections
+
+| Reason | Fix |
+|--------|-----|
+| Invalid manifest | Validate JSON |
+| Missing docs | Add README |
+| Quality low | Run /test-plugin |
+| Security issue | Security scan |
+
+### Exit Codes
+
+| Code | Meaning | Action |
+|------|---------|--------|
+| 0 | Complete | Deploy |
+| 1 | Minor issues | Review |
+| 2 | Major issues | Fix first |
+| 3 | Critical | Do not deploy |
+| 4 | Not ready | Address checklist |
 
 ---
 

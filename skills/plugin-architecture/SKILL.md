@@ -4,20 +4,34 @@ description: Master plugin folder structure, manifest design, and architectural 
 sasmp_version: "1.3.0"
 bonded_agent: 01-plugin-architect
 bond_type: PRIMARY_BOND
+
+# Production-Grade Configuration
+validation:
+  required_sections:
+    - quick_start
+    - core_concepts
+    - troubleshooting
+  min_examples: 3
+  max_lines: 350
+
+retry_config:
+  max_attempts: 3
+  backoff_type: exponential
+  initial_delay_ms: 500
 ---
 
 # Plugin Architecture
 
 ## Quick Start
 
-A well-structured plugin follows this minimal layout:
+A well-structured plugin follows this layout:
 
 ```
 my-plugin/
 ├── .claude-plugin/
 │   └── plugin.json              # Required manifest
 ├── agents/
-│   └── agent.md                 # Agent definition
+│   └── 01-agent.md              # Agent definition
 ├── skills/
 │   └── skill-name/SKILL.md      # Skill definition
 ├── commands/
@@ -27,15 +41,15 @@ my-plugin/
 └── README.md
 ```
 
-## Plugin Manifest (plugin.json)
+## Core Concepts
 
-The manifest defines what your plugin does and what it contains.
+### Plugin Manifest (plugin.json)
 
 ```json
 {
   "name": "my-plugin",
   "version": "1.0.0",
-  "description": "What my plugin does",
+  "description": "What my plugin does (max 256 chars)",
   "author": "Your Name",
   "license": "MIT",
   "repository": "https://github.com/user/repo",
@@ -43,7 +57,7 @@ The manifest defines what your plugin does and what it contains.
     {
       "name": "agent-id",
       "description": "What it does",
-      "file": "agents/agent.md"
+      "file": "agents/01-agent.md"
     }
   ],
   "commands": [
@@ -65,168 +79,62 @@ The manifest defines what your plugin does and what it contains.
 }
 ```
 
-### Manifest Rules
+### Manifest Validation Rules
 
-- **name**: lowercase-hyphens, 10-50 chars
-- **version**: semantic (MAJOR.MINOR.PATCH)
-- **description**: 50-256 characters
-- **agents**: array of agent definitions
-- **commands**: array of command definitions
-- **skills**: array of skill definitions
-- **hooks**: optional, points to hooks.json
+| Field | Rule | Example |
+|-------|------|---------|
+| name | lowercase-hyphens, 10-50 chars | `my-plugin` |
+| version | semantic (MAJOR.MINOR.PATCH) | `1.0.0` |
+| description | 50-256 characters | `Plugin for X` |
+| agents | array of agent definitions | `[{...}]` |
+| skills | array of skill definitions | `[{...}]` |
 
-## Agent Structure
+### Agent Structure (Production-Grade)
 
-Each agent is a markdown file with YAML frontmatter:
-
-```markdown
+```yaml
 ---
+name: agent-id
 description: What this agent does (max 1024 chars)
-capabilities:
-  - "Capability 1"
-  - "Capability 2"
-  - "Capability 3"
+model: sonnet
+sasmp_version: "1.3.0"
+
+input_schema:
+  type: object
+  properties:
+    # Define inputs
+
+output_schema:
+  type: object
+  properties:
+    # Define outputs
+
+error_handling:
+  strategy: graceful_degradation
+  max_retries: 3
 ---
-
-# Agent Name
-
-[Detailed content about what agent does]
-
-## When to Use
-
-Use this agent when:
-- Need 1
-- Need 2
-- Need 3
 ```
 
-### Naming Convention
-
-```
-01-primary-agent.md
-02-secondary-agent.md
-03-tertiary-agent.md
-```
-
-## Skill Structure
-
-Skills provide reusable knowledge and examples.
+### Skill Structure
 
 ```
 skills/
 ├── skill-one/
 │   ├── SKILL.md              # Always named SKILL.md
 │   └── resources/            # Optional: additional files
-│       ├── example.py
-│       └── reference.md
 └── skill-two/
     └── SKILL.md
 ```
 
-### SKILL.md Format
+### Architectural Patterns
 
-```markdown
----
-name: skill-unique-id
-description: "What skill teaches (max 1024 chars)"
----
-
-# Skill Name
-
-## Quick Start
-
-[Working code - copy-paste ready]
-
-## Core Concepts
-
-### Concept 1
-[Explanation with code]
-
-### Concept 2
-[More examples]
-
-## Advanced Topics
-
-[Expert-level content]
-
-## Real-World Projects
-
-[Practical applications]
-```
-
-## Command Structure
-
-Commands are entry points for users:
-
-```
-commands/
-├── create.md
-├── design.md
-├── test.md
-└── deploy.md
-```
-
-### Command Format
-
-```markdown
-# /command-name - Brief Description
-
-## What This Does
-
-[Clear explanation]
-
-## Usage
-
-```
-/command-name [options]
-```
-
-## Options
-
-| Option | Description |
-|--------|-------------|
-| `--flag` | What it does |
-
-## Example
-
-[Sample output]
-
-## Next Steps
-
-[What to do next]
-```
-
-## Hook Configuration
-
-Hooks automate plugin behavior:
-
-```json
-{
-  "hooks": [
-    {
-      "id": "hook-id",
-      "name": "Hook Name",
-      "event": "event-type",
-      "condition": "condition",
-      "action": "action-name",
-      "enabled": true
-    }
-  ]
-}
-```
-
-## Architectural Patterns
-
-### Single Responsibility
-
+**Single Responsibility:**
 ```
 Agent 1: Domain A only
 Agent 2: Domain B only
 Agent 3: Domain C only
 ```
 
-### Layered Architecture
-
+**Layered Architecture:**
 ```
 Commands (User interface)
     ↓
@@ -237,64 +145,118 @@ Skills (Knowledge & examples)
 Hooks (Automation)
 ```
 
-### Agent Collaboration
-
+**Orchestrator Pattern:**
 ```
-Agent A → asks → Agent B
-  ↓
-Links to shared skills
-  ↓
-Agent C for final review
+Orchestrator Agent
+├── Subagent A (Specialized)
+├── Subagent B (Specialized)
+└── Subagent C (Specialized)
 ```
 
-## File Organization Best Practices
+## Advanced Topics
 
+### Scaling Your Plugin
+
+| Stage | Agents | Skills | Commands | Description |
+|-------|--------|--------|----------|-------------|
+| MVP | 1 | 2 | 1 | Minimal viable |
+| Standard | 3 | 5 | 3 | Feature-rich |
+| Enterprise | 5-7 | 10+ | 5+ | Full-featured |
+
+### File Naming Conventions
+
+| Component | Pattern | Example |
+|-----------|---------|---------|
+| Agents | `00-name.md` | `01-architect.md` |
+| Skills | `skill-name/SKILL.md` | `plugin-dev/SKILL.md` |
+| Commands | `verb-noun.md` | `create-plugin.md` |
+| Hooks | `hooks.json` | `hooks.json` |
+
+## Real-World Projects
+
+### Project 1: Simple Plugin
 ```
-✅ Logical grouping
-├─ All agents together
-├─ All skills organized
-├─ All commands grouped
-└─ Config centralized
-
-✅ Clear naming
-├─ agents/01-primary.md
-├─ agents/02-secondary.md
-├─ skills/skill-one/SKILL.md
-└─ commands/action.md
-
-✅ Scalable structure
-├─ Easy to add agents
-├─ Simple to extend skills
-├─ Clear command naming
-└─ Organized hooks
-```
-
-## Scaling Your Plugin
-
-### From Simple to Complex
-
-**Stage 1**: 1 agent, 2 skills, 1 command
-```
-Minimal viable plugin
-```
-
-**Stage 2**: 3 agents, 5 skills, 3 commands
-```
-Feature-rich plugin
+simple-plugin/
+├── .claude-plugin/plugin.json
+├── agents/01-main.md
+├── skills/core/SKILL.md
+├── commands/run.md
+└── README.md
 ```
 
-**Stage 3**: 5-7 agents, 10+ skills, 5+ commands
+### Project 2: Enterprise Plugin
 ```
-Enterprise plugin
+enterprise-plugin/
+├── .claude-plugin/plugin.json
+├── agents/
+│   ├── 01-orchestrator.md
+│   ├── 02-analyzer.md
+│   └── 03-reporter.md
+├── skills/
+│   ├── analysis/SKILL.md
+│   └── reporting/SKILL.md
+├── commands/
+│   ├── analyze.md
+│   └── report.md
+├── hooks/hooks.json
+├── docs/
+│   └── ARCHITECTURE.md
+├── README.md
+└── CHANGELOG.md
 ```
 
-## Common Mistakes
+---
 
-❌ **Unclear structure** → Use recommended layout
-❌ **Mixed concerns** → One agent = one domain
-❌ **Missing manifest** → Always include plugin.json
-❌ **Bad naming** → Use lowercase-hyphens
-❌ **No documentation** → Document everything
+## 🔧 TROUBLESHOOTING
+
+### Common Issues
+
+| Issue | Cause | Solution |
+|-------|-------|----------|
+| Agent not found | Missing manifest entry | Add to `agents` array in plugin.json |
+| Skill won't load | Invalid YAML | Validate YAML syntax, check indentation |
+| Command fails | Missing file | Ensure file exists at path specified |
+| Plugin rejected | Invalid manifest | Validate JSON syntax |
+| Circular dependency | Agents reference each other | Use orchestrator pattern |
+
+### Debug Checklist
+
+```markdown
+□ Validate plugin.json syntax
+  → npx jsonlint .claude-plugin/plugin.json
+
+□ Check file references
+  → All agents[].file paths exist?
+  → All skills[].file paths exist?
+
+□ Validate YAML frontmatter
+  → Each file has valid --- block?
+
+□ Check naming conventions
+  → Lowercase-hyphens only?
+  → No spaces or underscores?
+```
+
+### Recovery Procedures
+
+**Invalid Manifest:**
+```bash
+# Validate JSON
+npx jsonlint .claude-plugin/plugin.json
+
+# Common fixes:
+# - Add missing commas
+# - Fix quote mismatches
+# - Check array brackets
+```
+
+**Missing File Reference:**
+```bash
+# List referenced files
+grep -r "file\":" .claude-plugin/plugin.json
+
+# Create missing file or remove reference
+```
 
 ---
 
@@ -303,3 +265,4 @@ Enterprise plugin
 - Creating plugin.json
 - Organizing agents and skills
 - Planning plugin growth
+- Troubleshooting structure issues

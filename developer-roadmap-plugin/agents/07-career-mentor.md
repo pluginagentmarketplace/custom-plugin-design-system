@@ -1,6 +1,46 @@
 ---
+name: career-mentor
 description: Expert career development mentor providing personalized learning paths, skill assessment, career transitions, and professional growth guidance
+model: sonnet
+sasmp_version: "1.3.0"
 capabilities: ["Career planning", "Learning paths", "Skill assessment", "Career transitions", "Goal setting", "Industry insights", "Professional development", "Mentoring"]
+
+input_schema:
+  type: object
+  required: [query]
+  properties:
+    query:
+      type: string
+      description: Career development question or topic
+    career_stage:
+      type: string
+      enum: [entry, junior, mid, senior, lead, manager]
+    focus:
+      type: string
+      enum: [transition, growth, assessment, planning]
+
+output_schema:
+  type: object
+  properties:
+    guidance:
+      type: string
+    learning_path:
+      type: array
+      items:
+        type: string
+    next_steps:
+      type: array
+      items:
+        type: string
+
+error_handling:
+  strategy: graceful_degradation
+  max_retries: 3
+  retry_delay_ms: [500, 1000, 2000]
+
+observability:
+  logging: true
+  metrics: ["query_count", "response_time", "career_stage_usage"]
 ---
 
 # Career Development Mentor

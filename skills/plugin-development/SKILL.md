@@ -2,374 +2,357 @@
 name: plugin-development
 description: Master writing plugins including agent implementation, skill creation, command development, and hook scripting. Learn best practices for plugin coding.
 sasmp_version: "1.3.0"
-bonded_agent: 01-plugin-architect
+bonded_agent: 02-plugin-developer
 bond_type: PRIMARY_BOND
+
+# Production-Grade Configuration
+validation:
+  required_sections:
+    - quick_start
+    - core_concepts
+    - troubleshooting
+  min_examples: 5
+
+retry_config:
+  max_attempts: 3
+  backoff_type: exponential
+  initial_delay_ms: 500
 ---
 
 # Plugin Development
 
 ## Quick Start
 
-Create a complete agent:
-
-```markdown
----
-description: Expert in X domain, helping with Y and Z
-capabilities:
-  - "Build X systems"
-  - "Optimize performance"
-  - "Debug issues"
----
-
-# Agent Name
-
-## Overview
-Expert specializing in X domain with 5+ years experience.
-
-## Expert Areas
-
-### Area 1: Core Concepts
-Explanation and best practices...
-
-## When to Use
-Use this agent when building X or optimizing Y.
-
-## Integration
-Works with: agent-2, agent-3, skill-common
-```
-
-## Agent Implementation
-
-### YAML Frontmatter
+Create a production-grade agent:
 
 ```yaml
 ---
-description: "What agent does. When to use. Max 1024 chars."
-capabilities:
-  - "Specific capability 1"
-  - "Specific capability 2"
-  - "Specific capability 3"
-  - "Specific capability 4"
+name: my-agent
+description: Expert in X domain (max 1024 chars)
+model: sonnet
+sasmp_version: "1.3.0"
+
+input_schema:
+  type: object
+  required: [task]
+  properties:
+    task: { type: string }
+
+output_schema:
+  type: object
+  properties:
+    result: { type: string }
+
+error_handling:
+  strategy: graceful_degradation
+  max_retries: 3
+  retry_delay_ms: [500, 1000, 2000]
+---
+
+# Agent Name
+
+## Overview
+Expert specializing in X domain.
+
+## Expert Areas
+### Area 1
+[Content]
+
+## Troubleshooting
+| Issue | Solution |
+|-------|----------|
+| Error X | Fix Y |
+
+## Integration
+Works with: agent-2, skill-common
+```
+
+## Core Concepts
+
+### Agent Implementation
+
+**YAML Frontmatter (Production):**
+```yaml
+---
+name: agent-id
+description: "What + When (max 1024 chars)"
+model: sonnet
+sasmp_version: "1.3.0"
+
+input_schema:
+  type: object
+  properties:
+    task: { type: string }
+
+output_schema:
+  type: object
+  properties:
+    result: { type: string }
+
+error_handling:
+  strategy: graceful_degradation
+  max_retries: 3
 ---
 ```
 
-### Content Structure
-
+**Content Structure:**
 ```markdown
 # Agent Name
 
 ## Overview
-[1-2 sentences about agent expertise]
+[1-2 sentences]
 
 ## Expert Areas
-
 ### Area 1
-[Detailed explanation with examples]
-
-### Area 2
-[More specific guidance]
-
-### Area 3
-[Best practices]
+[Detailed content]
 
 ## When to Use
-Use this agent when:
 - Task 1
 - Task 2
-- Task 3
+
+## Troubleshooting
+[Issue table]
 
 ## Integration
-Works with:
-- Agent name (for X)
-- Agent name (for Y)
-- Skill name (for Z)
-
----
-**Status**: ✅ Production Ready | **Updated**: [Date]
+Works with: [agents], [skills]
 ```
 
-## Skill Implementation
+### Skill Implementation
 
-### SKILL.md Template
-
-```markdown
+**SKILL.md Template:**
+```yaml
 ---
 name: skill-id
-description: "What it teaches and when to use (max 1024 chars)"
+description: "What it teaches (max 1024 chars)"
+sasmp_version: "1.3.0"
+bonded_agent: agent-id
+bond_type: PRIMARY_BOND
 ---
 
 # Skill Name
 
 ## Quick Start
-
-[Working code - immediately useful]
-
-```python
-# Real example
-result = do_something()
-print(result)
-```
+[Working code]
 
 ## Core Concepts
+[3+ sections]
 
-### Concept 1
-[Explanation with code]
-
-### Concept 2
-[Practical patterns]
-
-### Concept 3
-[Advanced usage]
-
-## Advanced Topics
-
-[Expert-level material]
+## Troubleshooting
+[Issue table]
 
 ## Real-World Projects
+[2+ examples]
+```
 
-[1-3 practical applications]
+### Command Implementation
 
+**Command Template:**
+```yaml
+---
+name: command-name
+description: Brief description
+exit_codes:
+  0: success
+  1: invalid_input
+  2: execution_error
 ---
 
-**Use this skill when:**
-- Learning X
-- Implementing Y
-- Solving Z problem
-```
-
-## Command Implementation
-
-### Command Files
-
-```markdown
-# /command-name - One-Line Description
+# /command-name - Description
 
 ## What This Does
-
-[Clear explanation of what command does]
+[Explanation]
 
 ## Usage
-
-```
-/command-name
-/command-name --option value
-/command-name --flag1 v1 --flag2 v2
-```
+/command-name [options]
 
 ## Options
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| --opt | string | null | What it does |
 
-| Option | Type | Description |
-|--------|------|-------------|
-| `--option` | string | What it does |
-| `--flag` | boolean | Enables X |
+## Error Messages
+| Error | Solution |
+|-------|----------|
+| ERR001 | Check X |
 
-## Example
-
-```
-$ /command-name my-plugin
-Creating plugin...
-✅ Done!
-
-Next: /command-2
+## Next Steps
+[Suggestions]
 ```
 
-## Tips
-
-- Tip 1
-- Tip 2
-
-## Related Commands
-
-- `/other-command`
-```
-
-## Hook Implementation
-
-### Hook JSON
+### Hook Implementation
 
 ```json
 {
+  "version": "1.0.0",
   "hooks": [
     {
-      "id": "unique-id",
-      "name": "Hook Display Name",
-      "description": "What it does",
-      "event": "event-type",
-      "condition": "condition-logic",
-      "action": "action-handler",
-      "enabled": true
+      "id": "hook-id",
+      "name": "Hook Name",
+      "event": "command-executed",
+      "condition": "command == 'create'",
+      "action": "log_usage",
+      "enabled": true,
+      "retry": {
+        "max_attempts": 3,
+        "backoff_ms": [500, 1000, 2000]
+      },
+      "timeout_ms": 5000
     }
-  ],
-  "notifications": {
-    "enabled": true,
-    "channels": ["in-app", "console"]
-  }
+  ]
 }
 ```
 
 ### Hook Event Types
 
-- `command-executed` - When command runs
-- `agent-invoked` - When agent used
-- `skill-loaded` - When skill accessed
-- `scheduled` - Periodic events
+| Event | Trigger | Use Case |
+|-------|---------|----------|
+| `command-executed` | Command runs | Logging |
+| `agent-invoked` | Agent used | Analytics |
+| `skill-loaded` | Skill accessed | Progress |
+| `error-occurred` | Any error | Alerting |
 
-## Code Quality Standards
+## Advanced Topics
 
-### Agent Quality
+### Code Quality Checklists
 
+**Agent Quality:**
 ```
-✅ Clear description (100-200 chars)
-✅ 5-10 specific capabilities
-✅ 3-5 expert areas
-✅ "When to Use" section
-✅ Integration points documented
+✅ input_schema defined
+✅ output_schema defined
+✅ error_handling configured
+✅ Troubleshooting section
 ✅ 250-400 lines total
 ```
 
-### Skill Quality
-
+**Skill Quality:**
 ```
-✅ Name: lowercase-hyphens
-✅ Description: actionable, clear
-✅ Quick Start: working code
-✅ 3+ core concepts
-✅ Advanced section
-✅ 2+ real projects
+✅ bonded_agent defined
+✅ Quick Start with code
+✅ Troubleshooting table
 ✅ 200-300 lines total
 ```
 
-### Command Quality
-
+**Command Quality:**
 ```
-✅ Clear description
-✅ Usage examples
-✅ Options documented
-✅ Example output shown
-✅ Next steps suggested
+✅ exit_codes defined
+✅ Options table
+✅ Error messages
 ✅ 100-150 lines total
 ```
 
-## Common Implementation Patterns
+### Implementation Patterns
 
-### Knowledge Pattern
+**Error Recovery Pattern:**
 ```
-Agent → Explains concept
-Skill → Provides examples
-Command → Enable practice
-```
-
-### Workflow Pattern
-```
-Command → Starts workflow
-Agent → Guides decisions
-Hook → Automate steps
+Try action
+  ↓ (fails)
+Retry [500ms, 1s, 2s]
+  ↓ (still fails)
+Fallback to alternative
+  ↓ (still fails)
+Graceful degradation + notify
 ```
 
-### Integration Pattern
-```
-Agent A → Recommends B
-Agent B → Links to skill X
-Skill X → Suggests command Y
+## Real-World Projects
+
+### Project 1: Simple Agent
+```yaml
+---
+name: helper
+description: General helper agent
+model: sonnet
+sasmp_version: "1.3.0"
+
+error_handling:
+  strategy: graceful_degradation
+  max_retries: 2
+---
+
+# Helper Agent
+
+## Overview
+Assists with common tasks.
+
+## Expert Areas
+### Task Automation
+[Content]
+
+## Troubleshooting
+| Issue | Solution |
+|-------|----------|
+| Slow response | Reduce content |
 ```
 
-## Testing Your Implementation
+### Project 2: Complete Skill
+```yaml
+---
+name: guide
+description: Step-by-step guide skill
+sasmp_version: "1.3.0"
+bonded_agent: helper
+bond_type: PRIMARY_BOND
+---
 
-### Agent Testing
+# Guide Skill
+
+## Quick Start
+[Working example]
+
+## Troubleshooting
+| Issue | Solution |
+|-------|----------|
+| Load error | Check YAML |
+```
+
+---
+
+## 🔧 TROUBLESHOOTING
+
+### Common Issues
+
+| Issue | Cause | Solution |
+|-------|-------|----------|
+| YAML parse error | Bad indentation | Use 2-space indent, no tabs |
+| Agent won't load | Missing field | Add name, description |
+| Skill not bonded | Missing bonded_agent | Add to frontmatter |
+| Hook not firing | Wrong event | Check event type |
+| Command timeout | Too much content | Trim to size limits |
+
+### Debug Checklist
 
 ```markdown
-✅ Description under 1024 chars
-✅ Capabilities are specific
-✅ Content is 250-400 lines
-✅ Integration documented
-✅ Status included
+□ Validate YAML syntax
+  → npx yaml-lint file.md
+
+□ Check required fields
+  → name, description present?
+
+□ Verify error handling
+  → strategy defined?
+  → max_retries set?
+
+□ Test integrations
+  → bonded_agent exists?
 ```
 
-### Skill Testing
+### Log Interpretation
 
-```markdown
-✅ Name lowercase-hyphenated
-✅ Quick Start runs without error
-✅ 3+ concepts explained
-✅ Real projects included
-✅ Proper formatting
-```
+| Level | Example | Action |
+|-------|---------|--------|
+| INFO | Agent loaded | None |
+| WARN | Retry 2/3 | Monitor |
+| ERROR | Parse failed | Fix immediately |
+| FATAL | Circuit open | Investigate |
 
-### Command Testing
+### Exit Codes
 
-```markdown
-✅ Command executes
-✅ Options work as documented
-✅ Output matches description
-✅ Next steps provided
-✅ No errors
-```
-
-## Documentation Requirements
-
-### For Agents
-
-```
-✅ What agent does
-✅ When to use
-✅ Capabilities (5-10)
-✅ Expert areas (3-5)
-✅ Integration points
-✅ Status & date
-```
-
-### For Skills
-
-```
-✅ Clear description
-✅ Quick Start code
-✅ Core concepts (3+)
-✅ Advanced topics
-✅ Real projects (2+)
-✅ Usage guidelines
-```
-
-### For Commands
-
-```
-✅ What it does
-✅ Usage syntax
-✅ Options table
-✅ Example output
-✅ Next steps
-✅ Related commands
-```
-
-## Version Control Practices
-
-### Commit Messages
-
-```
-feat: Add new skill for X
-fix: Correct Y in agent
-docs: Update Z documentation
-refactor: Improve performance
-test: Add validation tests
-```
-
-### File Changes
-
-```
-New agent?
-  → Ensure manifest updated
-  → Add to appropriate section
-  → Document relationships
-
-New skill?
-  → Create folder with SKILL.md
-  → Reference in manifest
-  → Add to agent capabilities
-
-New command?
-  → Create markdown file
-  → Add to manifest
-  → Document options
-```
+| Code | Meaning | Action |
+|------|---------|--------|
+| 0 | Success | Continue |
+| 1 | Invalid input | Check schema |
+| 2 | File error | Check paths |
+| 3 | YAML error | Fix syntax |
+| 4 | Schema error | Match types |
 
 ---
 
@@ -378,4 +361,4 @@ New command?
 - Creating new skills
 - Implementing commands
 - Setting up hooks
-- Testing implementation
+- Debugging implementation

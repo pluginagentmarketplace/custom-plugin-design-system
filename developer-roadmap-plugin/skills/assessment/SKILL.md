@@ -1,6 +1,21 @@
 ---
 name: assessment-guide
 description: Comprehensive guide for skill assessment, career evaluation, learning paths, knowledge testing, and professional development. Use when assessing technical skills, planning learning journeys, or evaluating career progress.
+sasmp_version: "1.3.0"
+bonded_agent: 07-career-mentor
+bond_type: PRIMARY_BOND
+
+validation:
+  required_sections:
+    - quick_start
+    - core_concepts
+    - examples
+  min_examples: 4
+
+retry_config:
+  max_attempts: 3
+  backoff_type: exponential
+  initial_delay_ms: 500
 ---
 
 # Skill Assessment & Learning Paths Guide
