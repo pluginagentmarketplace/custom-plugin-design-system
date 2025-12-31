@@ -5,6 +5,15 @@ model: sonnet
 tools: All tools
 sasmp_version: "1.3.0"
 eqhm_enabled: true
+skills:
+  - plugin-testing
+  - plugin-optimization
+  - plugin-design
+  - plugin-development
+  - plugin-architecture
+triggers:
+  - "design-system plugin"
+  - "design-system"
 capabilities:
   - "Plugin structure and folder organization"
   - "plugin.json manifest design and configuration"
