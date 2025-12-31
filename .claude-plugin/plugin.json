@@ -16,74 +16,74 @@
     {
       "name": "plugin-architect",
       "description": "Specializes in plugin architecture, structure, and design patterns",
-      "file": "agents/01-plugin-architect.md"
+      "file": "./agents/01-plugin-architect.md"
     },
     {
       "name": "plugin-developer",
       "description": "Expert in writing, implementing, and coding plugins",
-      "file": "agents/02-plugin-developer.md"
+      "file": "./agents/02-plugin-developer.md"
     },
     {
       "name": "plugin-designer",
       "description": "Focuses on plugin UX, interface design, and user experience",
-      "file": "agents/03-plugin-designer.md"
+      "file": "./agents/03-plugin-designer.md"
     },
     {
       "name": "plugin-tester",
       "description": "Specializes in plugin testing, QA, and validation",
-      "file": "agents/04-plugin-tester.md"
+      "file": "./agents/04-plugin-tester.md"
     },
     {
       "name": "plugin-optimizer",
       "description": "Expert in performance optimization and best practices",
-      "file": "agents/05-plugin-optimizer.md"
+      "file": "./agents/05-plugin-optimizer.md"
     }
   ],
   "commands": [
     {
       "name": "create-plugin",
-      "file": "commands/create-plugin.md",
+      "file": "./commands/create-plugin.md",
       "description": "Create a new plugin from scratch with guided setup"
     },
     {
       "name": "design-plugin",
-      "file": "commands/design-plugin.md",
+      "file": "./commands/design-plugin.md",
       "description": "Design plugin architecture and structure"
     },
     {
       "name": "test-plugin",
-      "file": "commands/test-plugin.md",
+      "file": "./commands/test-plugin.md",
       "description": "Test and validate your plugin"
     },
     {
       "name": "optimize-plugin",
-      "file": "commands/optimize-plugin.md",
+      "file": "./commands/optimize-plugin.md",
       "description": "Optimize plugin performance and UX"
     }
   ],
   "skills": [
     {
       "name": "plugin-architecture",
-      "file": "skills/plugin-architecture/SKILL.md"
+      "file": "./skills/plugin-architecture/SKILL.md"
     },
     {
       "name": "plugin-development",
-      "file": "skills/plugin-development/SKILL.md"
+      "file": "./skills/plugin-development/SKILL.md"
     },
     {
       "name": "plugin-design",
-      "file": "skills/plugin-design/SKILL.md"
+      "file": "./skills/plugin-design/SKILL.md"
     },
     {
       "name": "plugin-testing",
-      "file": "skills/plugin-testing/SKILL.md"
+      "file": "./skills/plugin-testing/SKILL.md"
     },
     {
       "name": "plugin-optimization",
-      "file": "skills/plugin-optimization/SKILL.md"
+      "file": "./skills/plugin-optimization/SKILL.md"
     }
   ],
   "hooks": {
-    "file": "hooks/hooks.json"
+    "file": "./hooks/hooks.json"
   }
 }
