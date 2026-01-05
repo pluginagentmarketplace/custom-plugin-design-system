@@ -82,8 +82,5 @@
       "name": "plugin-optimization",
       "file": "./skills/plugin-optimization/SKILL.md"
     }
-  ],
-  "hooks": {
-    "file": "./hooks/hooks.json"
-  }
+  ]
 }
